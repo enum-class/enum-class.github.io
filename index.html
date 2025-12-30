@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saman Dehghan - Systems Programmer & Researcher</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            margin-bottom: 20px;
+        }
+
+        .bio {
+            font-size: 1.1em;
+            color: #555;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact-links {
+            margin-top: 25px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .contact-links a {
+            color: #3498db;
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .contact-links a:hover {
+            background: #3498db;
+            color: white;
+        }
+
+        section {
+            background: white;
+            padding: 40px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+        }
+
+        .item {
+            margin-bottom: 25px;
+        }
+
+        .item h3 {
+            color: #34495e;
+            margin-bottom: 8px;
+        }
+
+        .item-meta {
+            color: #7f8c8d;
+            font-size: 0.95em;
+            margin-bottom: 10px;
+        }
+
+        .item p {
+            color: #555;
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background: #ecf0f1;
+            color: #2c3e50;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .project-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #7f8c8d;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            section {
+                padding: 25px;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Saman Dehghan</h1>
+            <p class="subtitle">M.Sc. Computer Science @ University of Illinois Urbana-Champaign</p>
+            <p class="bio">Systems programmer and software engineer passionate about high-performance computing, quantum algorithms, and building robust distributed systems. Currently researching automated C-to-Rust transpilation using LLMs.</p>
+            <div class="contact-links">
+                <a href="mailto:samand2@illinois.edu">📧 Email</a>
+                <a href="https://github.com/enum-class" target="_blank">💻 GitHub</a>
+                <a href="https://linkedin.com/in/sadehghan" target="_blank">💼 LinkedIn</a>
+            </div>
+        </header>
+
+        <section>
+            <h2>🔬 Research Experience</h2>
+            <div class="item">
+                <h3>Intelligent-CAT-Lab</h3>
+                <p class="item-meta">Research Contributor | Dec 2024 - Present</p>
+                <p>Developing automated pipeline to transpile unsafe C projects to idiomatic safe Rust using large language models. Designing algorithms to analyze C codebases, identify unsafe patterns, and generate memory-safe Rust code.</p>
+            </div>
+            <div class="item">
+                <h3>Womanium Quantum+AI 2024</h3>
+                <p class="item-meta">Research Contributor | July 2024</p>
+                <p>Achieved 3rd place globally in QML-for-Conspicuity-Detection project. Designed quantum algorithms for industrial data analysis, integrating QML techniques with classical methods.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>💼 Professional Experience</h2>
+            <div class="item">
+                <h3>Senior Software Engineer - Deriv</h3>
+                <p class="item-meta">Malaysia | Aug 2022 - Aug 2024</p>
+                <p>Designed real-time trading bot platform for diverse assets. Developed high-performance FIX and Fast servers, option pricing algorithms, and MT5 bridge integration.</p>
+            </div>
+            <div class="item">
+                <h3>Software Architect - Mahsan</h3>
+                <p class="item-meta">Tehran, Iran | Jan 2022 - Aug 2022</p>
+                <p>Led development of distributed network Data Loss Prevention solution. Designed service discovery tools and software-defined network (SDN) infrastructure.</p>
+            </div>
+            <div class="item">
+                <h3>Senior Software Engineer - Mahsan</h3>
+                <p class="item-meta">Tehran, Iran | Sep 2016 - Jan 2020</p>
+                <p>Refactored Redis for multithreading. Built high-performance IPC framework and C++ library for parallel data processing pipelines.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>🚀 Notable Open Source Contributions</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>Google/Highway</h3>
+                    <p>Implemented partial sort, nth element, and heapSelect algorithms</p>
+                </div>
+                <div class="project-card">
+                    <h3>Google/Gemma</h3>
+                    <p>Optimized RMSNorm and SquaredL2 using SIMD acceleration</p>
+                </div>
+                <div class="project-card">
+                    <h3>Qiskit-Aer</h3>
+                    <p>Fixed performance issues in IBM's quantum simulator</p>
+                </div>
+                <div class="project-card">
+                    <h3>Netmap</h3>
+                    <p>Added Intel ICE NIC support</p>
+                </div>
+                <div class="project-card">
+                    <h3>Google/FlatBuffer</h3>
+                    <p>Fixed import issues across Java, Go, and Dart</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>🌟 Personal Projects</h2>
+            <div class="item">
+                <h3>CRing</h3>
+                <p>Lightweight event loop library in pure C utilizing io-uring</p>
+            </div>
+            <div class="item">
+                <h3>C-ACES</h3>
+                <p>C implementation of ACES fully homomorphic encryption schema</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>🛠️ Technical Skills</h2>
+            <div class="skills">
+                <span class="skill-tag">C++11/14/17/20</span>
+                <span class="skill-tag">C Programming</span>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">Rust</span>
+                <span class="skill-tag">Linux</span>
+                <span class="skill-tag">DPDK</span>
+                <span class="skill-tag">Netmap</span>
+                <span class="skill-tag">XDP</span>
+                <span class="skill-tag">SIMD</span>
+                <span class="skill-tag">Multi-threading</span>
+                <span class="skill-tag">Distributed Systems</span>
+                <span class="skill-tag">Network Programming</span>
+                <span class="skill-tag">Docker</span>
+                <span class="skill-tag">Git</span>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2025 Saman Dehghan | Built with ❤️ for open source</p>
+        </footer>
+    </div>
+</body>
+</html>
