@@ -3,276 +3,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saman Dehghan - Systems Programmer & Researcher</title>
+    <title>Saman Dehghan - Systems Software Engineer</title>
     <style>
-        * {
+        :root {
+            --primary-color: #2563eb;
+            --text-color: #1f2937;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --secondary-text: #4b5563;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f5f5f5;
-        }
-
         .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
-
         header {
-            background: white;
-            padding: 60px 40px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
             text-align: center;
+            margin-bottom: 40px;
         }
-
         h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #111827;
         }
-
         .subtitle {
-            font-size: 1.2em;
-            color: #7f8c8d;
-            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: var(--secondary-text);
+            margin-bottom: 1rem;
         }
-
-        .bio {
-            font-size: 1.1em;
-            color: #555;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .contact-links {
-            margin-top: 25px;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
         .contact-links a {
-            color: #3498db;
+            color: var(--primary-color);
             text-decoration: none;
-            padding: 8px 16px;
-            border: 2px solid #3498db;
-            border-radius: 5px;
-            transition: all 0.3s;
+            margin: 0 10px;
+            font-weight: 500;
         }
-
         .contact-links a:hover {
-            background: #3498db;
-            color: white;
+            text-decoration: underline;
         }
-
         section {
-            background: white;
-            padding: 40px;
-            margin-bottom: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        h2 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #3498db;
-        }
-
-        .item {
-            margin-bottom: 25px;
-        }
-
-        .item h3 {
-            color: #34495e;
-            margin-bottom: 8px;
-        }
-
-        .item-meta {
-            color: #7f8c8d;
-            font-size: 0.95em;
-            margin-bottom: 10px;
-        }
-
-        .item p {
-            color: #555;
-        }
-
-        .skills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .skill-tag {
-            background: #ecf0f1;
-            color: #2c3e50;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9em;
-        }
-
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .project-card {
-            background: #ecf0f1;
-            padding: 20px;
+            background: var(--card-bg);
+            padding: 2rem;
             border-radius: 8px;
-            transition: transform 0.3s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
         }
-
-        .project-card:hover {
-            transform: translateY(-5px);
+        h2 {
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+            color: #111827;
         }
-
-        .project-card h3 {
-            color: #2c3e50;
-            margin-bottom: 10px;
+        .job, .project, .school {
+            margin-bottom: 1.5rem;
         }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-            color: #7f8c8d;
+        .job-header, .school-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
         }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2em;
-            }
-
-            section {
-                padding: 25px;
-            }
-
-            .contact-links {
+        .job-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #111827;
+        }
+        .job-company {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        .date, .location {
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+        }
+        ul {
+            padding-left: 1.2rem;
+            margin-top: 0.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+        .skill-category strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #111827;
+        }
+        @media (max-width: 600px) {
+            .job-header {
                 flex-direction: column;
-                align-items: center;
             }
+            h1 { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Saman Dehghan</h1>
-            <p class="subtitle">M.Sc. Computer Science @ University of Illinois Urbana-Champaign</p>
-            <p class="bio">Systems programmer and software engineer passionate about high-performance computing, quantum algorithms, and building robust distributed systems. Currently researching automated C-to-Rust transpilation using LLMs.</p>
-            <div class="contact-links">
-                <a href="mailto:samand2@illinois.edu">📧 Email</a>
-                <a href="https://github.com/enum-class" target="_blank">💻 GitHub</a>
-                <a href="https://linkedin.com/in/sadehghan" target="_blank">💼 LinkedIn</a>
-            </div>
-        </header>
 
-        <section>
-            <h2>🔬 Research Experience</h2>
-            <div class="item">
-                <h3>Intelligent-CAT-Lab</h3>
-                <p class="item-meta">Research Contributor | Dec 2024 - Present</p>
-                <p>Developing automated pipeline to transpile unsafe C projects to idiomatic safe Rust using large language models. Designing algorithms to analyze C codebases, identify unsafe patterns, and generate memory-safe Rust code.</p>
-            </div>
-            <div class="item">
-                <h3>Womanium Quantum+AI 2024</h3>
-                <p class="item-meta">Research Contributor | July 2024</p>
-                <p>Achieved 3rd place globally in QML-for-Conspicuity-Detection project. Designed quantum algorithms for industrial data analysis, integrating QML techniques with classical methods.</p>
-            </div>
-        </section>
+<div class="container">
+    
+    <header>
+        <h1>Saman Dehghan</h1> 
+        <div class="subtitle">M.Sc. Computer Science Student at UIUC | Systems Software Engineer</div>
+        <div class="contact-links">
+            <a href="mailto:samand2@illinois.edu">samand2@illinois.edu</a>
+            <a href="https://github.com/sadehghan">GitHub: sadehghan</a>
+            <span>Champaign, IL</span>
+        </div>
+    </header>
 
-        <section>
-            <h2>💼 Professional Experience</h2>
-            <div class="item">
-                <h3>Senior Software Engineer - Deriv</h3>
-                <p class="item-meta">Malaysia | Aug 2022 - Aug 2024</p>
-                <p>Designed real-time trading bot platform for diverse assets. Developed high-performance FIX and Fast servers, option pricing algorithms, and MT5 bridge integration.</p>
-            </div>
-            <div class="item">
-                <h3>Software Architect - Mahsan</h3>
-                <p class="item-meta">Tehran, Iran | Jan 2022 - Aug 2022</p>
-                <p>Led development of distributed network Data Loss Prevention solution. Designed service discovery tools and software-defined network (SDN) infrastructure.</p>
-            </div>
-            <div class="item">
-                <h3>Senior Software Engineer - Mahsan</h3>
-                <p class="item-meta">Tehran, Iran | Sep 2016 - Jan 2020</p>
-                <p>Refactored Redis for multithreading. Built high-performance IPC framework and C++ library for parallel data processing pipelines.</p>
-            </div>
-        </section>
+    <section>
+        <h2>About Me</h2>
+        <p>
+            I am a graduate student at the <strong>University of Illinois Urbana-Champaign</strong> specializing in systems programming. 
+            I have extensive experience in <strong>C++ and C</strong>, with a focus on high-performance computing, multi-threading, and network programming .
+            Currently, I am conducting research on using LLMs to transpile unsafe C code to idiomatic safe Rust .
+        </p>
+    </section>
 
-        <section>
-            <h2>🚀 Notable Open Source Contributions</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <h3>Google/Highway</h3>
-                    <p>Implemented partial sort, nth element, and heapSelect algorithms</p>
-                </div>
-                <div class="project-card">
-                    <h3>Google/Gemma</h3>
-                    <p>Optimized RMSNorm and SquaredL2 using SIMD acceleration</p>
-                </div>
-                <div class="project-card">
-                    <h3>Qiskit-Aer</h3>
-                    <p>Fixed performance issues in IBM's quantum simulator</p>
-                </div>
-                <div class="project-card">
-                    <h3>Netmap</h3>
-                    <p>Added Intel ICE NIC support</p>
-                </div>
-                <div class="project-card">
-                    <h3>Google/FlatBuffer</h3>
-                    <p>Fixed import issues across Java, Go, and Dart</p>
-                </div>
+    <section>
+        <h2>Technical Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-category">
+                <strong>Languages</strong>
+                C++ (11/14/17/20), C, Python, Rust
             </div>
-        </section>
+            <div class="skill-category">
+                <strong>Systems & Tools</strong>
+                Linux, CMake, Docker, Git, GDB, Jenkins, Ninja
+            </div>
+            <div class="skill-category">
+                <strong>Core Concepts</strong>
+                Multi-threading, Lock-free Concurrency, IPC, SIMD
+            </div>
+            <div class="skill-category">
+                <strong>Networking & Data</strong>
+                DPDK, Netmap, XDP, Socket Programming, Redis, PostgreSQL
+            </div>
+        </div>
+    </section>
 
-        <section>
-            <h2>🌟 Personal Projects</h2>
-            <div class="item">
-                <h3>CRing</h3>
-                <p>Lightweight event loop library in pure C utilizing io-uring</p>
-            </div>
-            <div class="item">
-                <h3>C-ACES</h3>
-                <p>C implementation of ACES fully homomorphic encryption schema</p>
-            </div>
-        </section>
+    <section>
+        <h2>Open Source Contributions</h2>
+        
+        <div class="project">
+            <div class="job-title">Google / Highway</div>
+            <ul>
+                <li>Implemented partial sort and the nth element algorithm to enhance data processing efficiency .</li>
+                <li>Integrated heapSelect functionality and Heap partial sort for optimized performance .</li>
+            </ul>
+        </div>
 
-        <section>
-            <h2>🛠️ Technical Skills</h2>
-            <div class="skills">
-                <span class="skill-tag">C++11/14/17/20</span>
-                <span class="skill-tag">C Programming</span>
-                <span class="skill-tag">Python</span>
-                <span class="skill-tag">Rust</span>
-                <span class="skill-tag">Linux</span>
-                <span class="skill-tag">DPDK</span>
-                <span class="skill-tag">Netmap</span>
-                <span class="skill-tag">XDP</span>
-                <span class="skill-tag">SIMD</span>
-                <span class="skill-tag">Multi-threading</span>
-                <span class="skill-tag">Distributed Systems</span>
-                <span class="skill-tag">Network Programming</span>
-                <span class="skill-tag">Docker</span>
-                <span class="skill-tag">Git</span>
-            </div>
-        </section>
+        <div class="project">
+            <div class="job-title">Google / Gemma</div>
+            <ul>
+                <li>Implemented hardware acceleration using <code>hwy/simd</code> for RMSNorm and Squared L2 calculations .</li>
+                <li>Introduced clang-tidy for static analysis to improve code quality .</li>
+            </ul>
+        </div>
 
-        <footer>
-            <p>© 2025 Saman Dehghan | Built with ❤️ for open source</p>
-        </footer>
-    </div>
+        <div class="project">
+            <div class="job-title">Netmap</div>
+            <ul>
+                <li>Added support for Intel ICE Network Interface Cards (NICs) to the framework .</li>
+            </ul>
+        </div>
+
+        <div class="project">
+            <div class="job-title">Google / FlatBuffers</div>
+            <ul>
+                <li>Fixed Java import wildcard issues and resolved "go generate" errors .</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>Professional Experience</h2>
+
+        <div class="job">
+            <div class="job-header">
+                <div><span class="job-title">Research Contributor</span> at <span class="job-company">Intelligent-CAT-Lab (UIUC)</span></div>
+                <div class="date">Dec 2024 - Present</div>
+            </div>
+            <ul>
+                <li>Developing an automated pipeline to transpile unsafe C projects to idiomatic safe Rust using LLMs.</li>
+                <li>Designing algorithms to analyze C codebases for unsafe patterns and ensure memory safety.</li>
+            </ul>
+        </div>
+
+        <div class="job">
+            <div class="job-header">
+                <div><span class="job-title">Senior Software Engineer</span> at <span class="job-company">Deriv</span></div>
+                <div class="date">Aug 2022 - Aug 2024</div>
+            </div>
+            <ul>
+                <li>Designed and developed a real-time trading bot platform for various assets including cryptocurrencies.</li>
+                <li>Developed high-performance FIX and Fast servers for efficient communication.</li>
+            </ul>
+        </div>
+
+        <div class="job">
+            <div class="job-header">
+                <div><span class="job-title">Software Architect</span> at <span class="job-company">Mahsan</span></div>
+                <div class="date">Jan 2022 - Aug 2022</div>
+            </div>
+            <ul>
+                <li>Spearheaded the design of a high-performance distributed Data Loss Prevention (DLP) solution.</li>
+                <li>Designed configurable SDN tools to dynamically route and load-balance network traffic.</li>
+            </ul>
+        </div>
+
+        <div class="job">
+            <div class="job-header">
+                <div><span class="job-title">Senior Software Engineer</span> at <span class="job-company">Mahsan</span></div>
+                <div class="date">Sep 2016 - Jan 2020</div>
+            </div>
+            <ul>
+                <li>Refactored Redis to become multithreaded and implemented reliable multicast messaging.</li>
+                <li>Designed a C++ library for parallel and concurrent data processing pipelines.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+        <h2>Education</h2>
+        
+        <div class="school">
+            <div class="school-header">
+                <div class="job-title">University of Illinois Urbana-Champaign</div>
+                <div class="date">Fall 2025</div>
+            </div>
+            <div>M.Sc. Computer Science</div>
+        </div>
+
+        <div class="school">
+            <div class="school-header">
+                <div class="job-title">Sharif University of Technology</div>
+                <div class="date">2011 - 2016</div>
+            </div>
+            <div>B.Sc. Computer Engineering</div>
+        </div>
+    </section>
+
+    <footer style="text-align: center; color: #6b7280; font-size: 0.9rem; margin-top: 40px;">
+        <p>&copy; 2025 Saman Dehghan. Last updated August 2025 .</p>
+    </footer>
+
+</div>
+
 </body>
 </html>
