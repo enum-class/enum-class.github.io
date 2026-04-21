@@ -1,265 +1,831 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saman Dehghan - Systems Software Engineer</title>
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --text-color: #1f2937;
-            --bg-color: #f3f4f6;
-            --card-bg: #ffffff;
-            --secondary-text: #4b5563;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            color: #111827;
-        }
-        .subtitle {
-            font-size: 1.2rem;
-            color: var(--secondary-text);
-            margin-bottom: 1rem;
-        }
-        .contact-links a {
-            color: var(--primary-color);
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: 500;
-        }
-        .contact-links a:hover {
-            text-decoration: underline;
-        }
-        section {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            margin-bottom: 2rem;
-        }
-        h2 {
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 0.5rem;
-            margin-top: 0;
-            color: #111827;
-        }
-        .job, .project, .school {
-            margin-bottom: 1.5rem;
-        }
-        .job-header, .school-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            flex-wrap: wrap;
-        }
-        .job-title {
-            font-weight: bold;
-            font-size: 1.1rem;
-            color: #111827;
-        }
-        .job-company {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-        .date, .location {
-            color: var(--secondary-text);
-            font-size: 0.9rem;
-        }
-        ul {
-            padding-left: 1.2rem;
-            margin-top: 0.5rem;
-        }
-        li {
-            margin-bottom: 0.5rem;
-        }
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-        .skill-category strong {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: #111827;
-        }
-        @media (max-width: 600px) {
-            .job-header {
-                flex-direction: column;
-            }
-            h1 { font-size: 2rem; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saman Dehghan — Systems Software Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=JetBrains+Mono:wght@400;500;600&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f1e8;
+  --bg-alt: #ece6d6;
+  --ink: #1a1a1a;
+  --ink-soft: #4a4a4a;
+  --ink-faint: #8a8578;
+  --rule: #d6cfbd;
+  --accent: #c2410c;
+  --accent-soft: #fed7aa;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter Tight', -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  font-size: 16px;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(26,26,26,0.025) 1px, transparent 0);
+  background-size: 20px 20px;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* HEADER */
+header {
+  padding: 80px 0 60px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.header-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: end;
+}
+
+.name {
+  font-family: 'Fraunces', serif;
+  font-weight: 300;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: var(--ink);
+}
+
+.name em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+.tagline {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+  margin-top: 20px;
+  max-width: 520px;
+}
+
+.meta-block {
+  text-align: right;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+  line-height: 1.8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.meta-block a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.meta-block a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* SECTIONS */
+section {
+  padding: 60px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+section:last-of-type { border-bottom: none; }
+
+.section-header {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 40px;
+  align-items: start;
+  margin-bottom: 40px;
+}
+
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--ink-faint);
+  padding-top: 8px;
+}
+
+.section-label::before {
+  content: "§";
+  color: var(--accent);
+  margin-right: 6px;
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+}
+
+.section-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.section-title em {
+  font-style: italic;
+  color: var(--ink-soft);
+}
+
+/* ABOUT */
+.about-body {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 40px;
+}
+
+.prose {
+  font-family: 'Fraunces', serif;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--ink);
+  font-weight: 300;
+  max-width: 620px;
+}
+
+.prose strong {
+  font-weight: 500;
+  color: var(--ink);
+  background: linear-gradient(to top, var(--accent-soft) 40%, transparent 40%);
+  padding: 0 2px;
+}
+
+.prose + .prose { margin-top: 18px; }
+
+/* SKILLS */
+.skills-grid {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 40px;
+}
+
+.skills-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px 40px;
+}
+
+.skill-block {
+  border-top: 2px solid var(--ink);
+  padding-top: 14px;
+}
+
+.skill-block-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-faint);
+  margin-bottom: 8px;
+}
+
+.skill-block-content {
+  font-family: 'Fraunces', serif;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+/* ENTRIES */
+.entry {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 40px;
+  padding: 28px 0;
+  border-top: 1px solid var(--rule);
+}
+
+.entry:first-of-type {
+  border-top: 2px solid var(--ink);
+}
+
+.entry-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-faint);
+  padding-top: 6px;
+  line-height: 1.7;
+}
+
+.entry-date .loc {
+  color: var(--ink-soft);
+  display: block;
+  margin-top: 2px;
+}
+
+.entry-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.35rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 4px;
+  line-height: 1.3;
+}
+
+.entry-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.entry-subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+  letter-spacing: 0.02em;
+}
+
+.entry-body {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+}
+
+.entry-body ul {
+  list-style: none;
+  padding: 0;
+}
+
+.entry-body li {
+  position: relative;
+  padding-left: 18px;
+  margin-bottom: 6px;
+}
+
+.entry-body li::before {
+  content: "—";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.entry-body code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85em;
+  background: var(--bg-alt);
+  padding: 1px 6px;
+  border-radius: 3px;
+  color: var(--ink);
+}
+
+/* PUBLICATIONS */
+.pub {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 40px;
+  padding: 32px 0;
+  border-top: 1px solid var(--rule);
+}
+
+.pub:first-of-type {
+  border-top: 2px solid var(--ink);
+}
+
+.pub-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  line-height: 1.7;
+  padding-top: 6px;
+}
+
+.pub-meta .venue {
+  display: block;
+  color: var(--ink);
+  margin-top: 4px;
+}
+
+.pub-title {
+  font-family: 'Fraunces', serif;
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.pub-title a {
+  color: inherit;
+  text-decoration: none;
+  background-image: linear-gradient(to right, var(--accent), var(--accent));
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s ease;
+}
+
+.pub-title a:hover {
+  background-size: 100% 1px;
+}
+
+.pub-authors {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+  line-height: 1.55;
+}
+
+.pub-authors .self {
+  color: var(--ink);
+  font-weight: 600;
+  border-bottom: 1.5px solid var(--accent);
+}
+
+.pub-abstract {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  max-width: 680px;
+}
+
+.pub-abstract.collapsed {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.pub-toggle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: none;
+  border: none;
+  padding: 10px 0 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pub-toggle:hover { text-decoration: underline; }
+
+.pub-toggle .arrow {
+  transition: transform 0.2s ease;
+  display: inline-block;
+}
+
+.pub-toggle.open .arrow {
+  transform: rotate(90deg);
+}
+
+/* EDUCATION */
+.edu-block {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 40px;
+  padding: 24px 0;
+  border-top: 1px solid var(--rule);
+}
+
+.edu-block:first-of-type {
+  border-top: 2px solid var(--ink);
+}
+
+.edu-school {
+  font-family: 'Fraunces', serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 2px;
+}
+
+.edu-degree {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+}
+
+.edu-gpa {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* FOOTER */
+footer {
+  padding: 50px 0 60px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  border-top: 1px solid var(--rule);
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+footer .mark {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+
+/* RESPONSIVE */
+@media (max-width: 760px) {
+  .container { padding: 0 24px; }
+  header { padding: 50px 0 40px; }
+
+  .header-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .meta-block { text-align: left; }
+
+  .section-header,
+  .about-body,
+  .skills-grid,
+  .entry,
+  .pub,
+  .edu-block {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .section-label,
+  .entry-date,
+  .pub-meta {
+    padding-top: 0;
+  }
+
+  .skills-list { grid-template-columns: 1fr; }
+
+  section { padding: 44px 0; }
+}
+</style>
 </head>
 <body>
 
 <div class="container">
-    
-    <header>
-        <h1>Saman Dehghan</h1> 
-        <div class="subtitle">M.Sc. Computer Science Student at UIUC | Systems Software Engineer</div>
-        <div class="contact-links">
-            <a href="mailto:samand2@illinois.edu">samand2@illinois.edu</a>
-            <a href="https://github.com/sadehghan">GitHub: sadehghan</a>
-            <span>Champaign, IL</span>
-        </div>
-    </header>
 
-    <section>
-        <h2>About Me</h2>
-        <p>
-            I am a graduate student at the <strong>University of Illinois Urbana-Champaign</strong> specializing in systems programming. 
-            I have extensive experience in <strong>C++ and C</strong>, with a focus on high-performance computing, multi-threading, and network programming .
-            Currently, I am conducting research on using LLMs to transpile unsafe C code to idiomatic safe Rust .
+  <header>
+    <div class="header-grid">
+      <div>
+        <h1 class="name">Saman <em>Dehghan</em></h1>
+        <p class="tagline">// Systems software engineer working at the boundary of low-level performance and formal safety. C++ by trade, Rust by conviction.</p>
+      </div>
+      <div class="meta-block">
+        Champaign, IL<br>
+        <a href="https://enumclass.cc">enumclass.cc</a><br>
+        <a href="mailto:saman@enumclass.cc">saman@enumclass.cc</a><br>
+        <a href="https://github.com/sadehghan">github/sadehghan</a><br>
+        <a href="https://linkedin.com/in/enum-class">linkedin/enum-class</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="about">
+    <div class="section-header">
+      <div class="section-label">About</div>
+      <h2 class="section-title">Graduate researcher and systems engineer, writing the code <em>underneath the code.</em></h2>
+    </div>
+    <div class="about-body">
+      <div></div>
+      <div>
+        <p class="prose">
+          I am an M.Sc. Computer Science student at the <strong>University of Illinois Urbana-Champaign</strong>, with nearly a decade of industry experience building high-performance systems in <strong>C++ and C</strong> — trading platforms, network data planes, deep-packet inspection engines, and multithreaded storage engines.
         </p>
-    </section>
+        <p class="prose">
+          My current research sits at the intersection of <strong>programming languages and large language models</strong>: building automated pipelines that translate unsafe C repositories into idiomatic, memory-safe Rust, and studying how agentic LLMs plan and execute engineering tasks.
+        </p>
+      </div>
+    </div>
+  </section>
 
-    <section>
-        <h2>Technical Skills</h2>
-        <div class="skills-grid">
-            <div class="skill-category">
-                <strong>Languages</strong>
-                C++ (11/14/17/20), C, Python, Rust
-            </div>
-            <div class="skill-category">
-                <strong>Systems & Tools</strong>
-                Linux, CMake, Docker, Git, GDB, Jenkins, Ninja
-            </div>
-            <div class="skill-category">
-                <strong>Core Concepts</strong>
-                Multi-threading, Lock-free Concurrency, IPC, SIMD
-            </div>
-            <div class="skill-category">
-                <strong>Networking & Data</strong>
-                DPDK, Netmap, XDP, Socket Programming, Redis, PostgreSQL
-            </div>
+  <section id="publications">
+    <div class="section-header">
+      <div class="section-label">Publications</div>
+      <h2 class="section-title">Selected <em>research</em>.</h2>
+    </div>
+
+    <article class="pub">
+      <div class="pub-meta">
+        2025<span class="venue">arXiv:2511.20617</span>
+      </div>
+      <div>
+        <h3 class="pub-title">
+          <a href="https://arxiv.org/abs/2511.20617" target="_blank" rel="noopener">Translating Large-Scale C Repositories to Idiomatic Rust</a>
+        </h3>
+        <p class="pub-authors">
+          <span class="self">Saman Dehghan</span>, Tianran Sun, Tianxiang Wu, Zihan Li, Reyhaneh Jabbarvand
+        </p>
+        <p class="pub-abstract collapsed" data-abstract>
+          Existing C to Rust translation techniques fail to balance quality and scalability: transpilation-based approaches scale to large projects but produce code with poor safety, idiomaticity, and readability. In contrast, LLM-based techniques are prohibitively expensive due to their reliance on frontier models, limiting scalability. This paper proposes <strong>Rustine</strong>, a fully automated pipeline for effective and efficient repository-level C to idiomatic safe Rust translation. Evaluating on a diverse set of 23 C programs (27–13,200 LOC), Rustine generates fully compilable Rust code for all and achieves 87% functional equivalence (1,063,099 of 1,221,192 assertions), with average function and line coverage of 74.7% and 72.2%. Compared to six prior repository-level techniques, Rustine's translations are safer (fewer raw pointers, pointer arithmetic, and unsafe constructs), more idiomatic (fewer linter violations), and more readable. When translations cannot fully pass tests, developers complete the remaining work in 4.5 hours on average using Rustine as debugging support.
+        </p>
+        <button class="pub-toggle" data-toggle>
+          <span class="arrow">▸</span> <span class="label">Read abstract</span>
+        </button>
+      </div>
+    </article>
+
+    <article class="pub">
+      <div class="pub-meta">
+        2026<span class="venue">arXiv:2604.12147</span>
+      </div>
+      <div>
+        <h3 class="pub-title">
+          <a href="https://arxiv.org/abs/2604.12147" target="_blank" rel="noopener">From Plan to Action: How Well Do Agents Follow the Plan?</a>
+        </h3>
+        <p class="pub-authors">
+          Shuyang Liu, <span class="self">Saman Dehghan</span>, Jatin Ganhotra, Martin Hirzel, Reyhaneh Jabbarvand
+        </p>
+        <p class="pub-abstract collapsed" data-abstract>
+          Agents aspire to eliminate task-specific prompt crafting through autonomous reason-act-observe loops, yet they are commonly instructed to follow a task-specific plan — e.g., navigation, reproduction, patch, and validation for software issues. It is unknown to what extent agents actually follow such plans, and without that analysis it is impossible to assess whether a solution came from correct strategic reasoning or from data contamination and benchmark overfitting. This paper presents the first extensive, systematic analysis of plan compliance in programming agents, examining 16,991 trajectories from SWE-agent across four LLMs on SWE-bench Verified and SWE-bench Pro under eight plan variations. Without an explicit plan, agents fall back on workflows internalized during training, which are often incomplete, overfit, or inconsistently applied. Providing the standard plan improves issue resolution, and periodic reminders mitigate violations. A subpar plan hurts performance more than no plan at all. Surprisingly, augmenting a plan with additional task-relevant phases early can degrade performance when those phases do not align with the model's internal strategy. These findings highlight a research gap: fine-tuning paradigms that teach models to follow instructed plans rather than encoding task-specific plans within them.
+        </p>
+        <button class="pub-toggle" data-toggle>
+          <span class="arrow">▸</span> <span class="label">Read abstract</span>
+        </button>
+      </div>
+    </article>
+  </section>
+
+  <section id="skills">
+    <div class="section-header">
+      <div class="section-label">Stack</div>
+      <h2 class="section-title">Tools of the <em>trade</em>.</h2>
+    </div>
+    <div class="skills-grid">
+      <div></div>
+      <div class="skills-list">
+        <div class="skill-block">
+          <div class="skill-block-label">Languages</div>
+          <div class="skill-block-content">C++ 11 / 14 / 17 / 20, C, Rust, Python</div>
         </div>
-    </section>
-
-    <section>
-        <h2>Open Source Contributions</h2>
-        
-        <div class="project">
-            <div class="job-title">Google / Highway</div>
-            <ul>
-                <li>Implemented partial sort and the nth element algorithm to enhance data processing efficiency .</li>
-                <li>Integrated heapSelect functionality and Heap partial sort for optimized performance .</li>
-            </ul>
+        <div class="skill-block">
+          <div class="skill-block-label">Build &amp; Tooling</div>
+          <div class="skill-block-content">CMake, Ninja, Meson, Bazel, Docker, Git, Jenkins, GDB, Intel Parallel Studio</div>
         </div>
-
-        <div class="project">
-            <div class="job-title">Google / Gemma</div>
-            <ul>
-                <li>Implemented hardware acceleration using <code>hwy/simd</code> for RMSNorm and Squared L2 calculations .</li>
-                <li>Introduced clang-tidy for static analysis to improve code quality .</li>
-            </ul>
+        <div class="skill-block">
+          <div class="skill-block-label">Core Concepts</div>
+          <div class="skill-block-content">Multithreading, lock-free concurrency, IPC, SIMD, DNN</div>
         </div>
-
-        <div class="project">
-            <div class="job-title">Netmap</div>
-            <ul>
-                <li>Added support for Intel ICE Network Interface Cards (NICs) to the framework .</li>
-            </ul>
+        <div class="skill-block">
+          <div class="skill-block-label">Networking &amp; Data</div>
+          <div class="skill-block-content">DPDK, Netmap, XDP, sockets, Redis, PostgreSQL</div>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="project">
-            <div class="job-title">Google / FlatBuffers</div>
-            <ul>
-                <li>Fixed Java import wildcard issues and resolved "go generate" errors .</li>
-            </ul>
+  <section id="experience">
+    <div class="section-header">
+      <div class="section-label">Experience</div>
+      <h2 class="section-title">Where I've <em>shipped</em>.</h2>
+    </div>
+
+    <article class="entry">
+      <div class="entry-date">Dec 2024 — Present<span class="loc">Urbana, IL</span></div>
+      <div>
+        <h3 class="entry-title">Research Contributor, <em>Intelligent-CAT Lab</em></h3>
+        <div class="entry-subtitle">University of Illinois Urbana-Champaign</div>
+        <div class="entry-body">
+          <ul>
+            <li>Designing an automated pipeline to transpile unsafe C projects into idiomatic, memory-safe Rust using LLMs.</li>
+            <li>Building static analyses to identify unsafe patterns in C codebases and guide safe-construct synthesis.</li>
+          </ul>
         </div>
-    </section>
+      </div>
+    </article>
 
-    <section>
-        <h2>Professional Experience</h2>
-
-        <div class="job">
-            <div class="job-header">
-                <div><span class="job-title">Research Contributor</span> at <span class="job-company">Intelligent-CAT-Lab (UIUC)</span></div>
-                <div class="date">Dec 2024 - Present</div>
-            </div>
-            <ul>
-                <li>Developing an automated pipeline to transpile unsafe C projects to idiomatic safe Rust using LLMs.</li>
-                <li>Designing algorithms to analyze C codebases for unsafe patterns and ensure memory safety.</li>
-            </ul>
+    <article class="entry">
+      <div class="entry-date">Aug 2022 — Aug 2024<span class="loc">Malaysia</span></div>
+      <div>
+        <h3 class="entry-title">Senior Software Engineer, <em>Deriv</em></h3>
+        <div class="entry-subtitle">Online trading platform</div>
+        <div class="entry-body">
+          <ul>
+            <li>Designed and delivered a real-time trading bot platform executing client strategies across cryptocurrencies, commodities, and other asset classes.</li>
+            <li>Built high-performance FIX and FAST servers for low-latency market communication.</li>
+            <li>Engineered an option-pricing algorithm to value contracts and inform automated trading decisions.</li>
+            <li>Developed an MT5 bridge to integrate the in-house platform with MetaTrader 5.</li>
+          </ul>
         </div>
+      </div>
+    </article>
 
-        <div class="job">
-            <div class="job-header">
-                <div><span class="job-title">Senior Software Engineer</span> at <span class="job-company">Deriv</span></div>
-                <div class="date">Aug 2022 - Aug 2024</div>
-            </div>
-            <ul>
-                <li>Designed and developed a real-time trading bot platform for various assets including cryptocurrencies.</li>
-                <li>Developed high-performance FIX and Fast servers for efficient communication.</li>
-            </ul>
+    <article class="entry">
+      <div class="entry-date">Jan 2022 — Aug 2022<span class="loc">Tehran, Iran</span></div>
+      <div>
+        <h3 class="entry-title">Software Architect, <em>Mahsan</em></h3>
+        <div class="entry-subtitle">Network security</div>
+        <div class="entry-body">
+          <ul>
+            <li>Led architecture of a distributed, real-time Data Loss Prevention (DLP) engine operating at line rate.</li>
+            <li>Designed a distributed service-discovery tool built on Avahi and Poco for networked service registration.</li>
+            <li>Designed configurable SDN tooling for dynamic traffic routing and load balancing in changing environments.</li>
+            <li>Mentored junior engineers, led code reviews, and drove architectural standards across the team.</li>
+          </ul>
         </div>
+      </div>
+    </article>
 
-        <div class="job">
-            <div class="job-header">
-                <div><span class="job-title">Software Architect</span> at <span class="job-company">Mahsan</span></div>
-                <div class="date">Jan 2022 - Aug 2022</div>
-            </div>
-            <ul>
-                <li>Spearheaded the design of a high-performance distributed Data Loss Prevention (DLP) solution.</li>
-                <li>Designed configurable SDN tools to dynamically route and load-balance network traffic.</li>
-            </ul>
+    <article class="entry">
+      <div class="entry-date">Sep 2016 — Jan 2020<span class="loc">Tehran, Iran</span></div>
+      <div>
+        <h3 class="entry-title">Senior Software Engineer, <em>Mahsan</em></h3>
+        <div class="entry-subtitle">Systems and infrastructure</div>
+        <div class="entry-body">
+          <ul>
+            <li>Refactored Redis into a multithreaded variant and implemented reliable multicast messaging for cluster-wide data distribution.</li>
+            <li>Built a low-latency IPC framework combining shared memory and message passing for inter-node communication.</li>
+            <li>Authored a C++ library for parallel and concurrent data-processing pipelines, abstracting parallelism and data-flow management.</li>
+          </ul>
         </div>
+      </div>
+    </article>
 
-        <div class="job">
-            <div class="job-header">
-                <div><span class="job-title">Senior Software Engineer</span> at <span class="job-company">Mahsan</span></div>
-                <div class="date">Sep 2016 - Jan 2020</div>
-            </div>
-            <ul>
-                <li>Refactored Redis to become multithreaded and implemented reliable multicast messaging.</li>
-                <li>Designed a C++ library for parallel and concurrent data processing pipelines.</li>
-            </ul>
+    <article class="entry">
+      <div class="entry-date">Feb 2015 — Sep 2016<span class="loc">Tehran, Iran</span></div>
+      <div>
+        <h3 class="entry-title">C++ Developer, <em>Z.I.E</em></h3>
+        <div class="entry-subtitle">Network traffic analysis</div>
+        <div class="entry-body">
+          <ul>
+            <li>Developed a high-performance, low-latency deep packet inspection library for protocol detection across the network stack.</li>
+            <li>Built a machine-learning system for application-layer protocol identification.</li>
+            <li>Implemented a pattern-matching library based on Aho–Corasick and RETE algorithms.</li>
+          </ul>
         </div>
-    </section>
+      </div>
+    </article>
+  </section>
 
-    <section>
-        <h2>Education</h2>
-        
-        <div class="school">
-            <div class="school-header">
-                <div class="job-title">University of Illinois Urbana-Champaign</div>
-                <div class="date">Fall 2025</div>
-            </div>
-            <div>M.Sc. Computer Science</div>
+  <section id="open-source">
+    <div class="section-header">
+      <div class="section-label">Projects &amp; Open Source</div>
+      <h2 class="section-title">Personal work and contributions to <em>public code</em>.</h2>
+    </div>
+
+    <article class="entry">
+      <div class="entry-date">CRing</div>
+      <div>
+        <h3 class="entry-title">Event loop library in pure C</h3>
+        <div class="entry-body">
+          <ul>
+            <li>Lightweight event loop built on <code>io_uring</code>, designed for minimal overhead and predictable latency.</li>
+          </ul>
         </div>
+      </div>
+    </article>
 
-        <div class="school">
-            <div class="school-header">
-                <div class="job-title">Sharif University of Technology</div>
-                <div class="date">2011 - 2016</div>
-            </div>
-            <div>B.Sc. Computer Engineering</div>
+    <article class="entry">
+      <div class="entry-date">C-ACES</div>
+      <div>
+        <h3 class="entry-title">Homomorphic encryption in C</h3>
+        <div class="entry-body">
+          <ul>
+            <li>C implementation of the ACES fully-homomorphic-encryption scheme.</li>
+          </ul>
         </div>
-    </section>
+      </div>
+    </article>
 
-    <footer style="text-align: center; color: #6b7280; font-size: 0.9rem; margin-top: 40px;">
-        <p>&copy; 2025 Saman Dehghan. Last updated August 2025 .</p>
-    </footer>
+    <article class="entry">
+      <div class="entry-date">Qiskit-Aer</div>
+      <div>
+        <h3 class="entry-title">IBM quantum simulator</h3>
+        <div class="entry-body">
+          <ul>
+            <li>Diagnosed and fixed a performance regression in the Aer simulator.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="entry-date">Google / Highway</div>
+      <div>
+        <h3 class="entry-title">SIMD algorithms library</h3>
+        <div class="entry-body">
+          <ul>
+            <li>Implemented partial sort and nth-element algorithms for improved data-processing throughput.</li>
+            <li>Added heapSelect and heap-based partial sort for specialized selection workloads.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="entry-date">Google / Gemma</div>
+      <div>
+        <h3 class="entry-title">Inference runtime</h3>
+        <div class="entry-body">
+          <ul>
+            <li>Added hardware-accelerated RMSNorm and Squared-L2 kernels via <code>hwy/simd</code>.</li>
+            <li>Introduced clang-tidy into the build for static-analysis-driven code quality.</li>
+            <li>Resolved narrowing-conversion issues and tightened <code>const</code>-correctness across the codebase.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="entry-date">Google / FlatBuffers</div>
+      <div>
+        <h3 class="entry-title">Serialization library</h3>
+        <div class="entry-body">
+          <ul>
+            <li>Fixed Java import-wildcard issues and resolved <code>go generate</code> errors tied to undefined packages.</li>
+            <li>Addressed schema-to-binary conversion bugs and Dart import problems.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="entry">
+      <div class="entry-date">Netmap</div>
+      <div>
+        <h3 class="entry-title">Kernel-bypass packet I/O</h3>
+        <div class="entry-body">
+          <ul>
+            <li>Added support for Intel ICE network interface cards to the framework.</li>
+          </ul>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <section id="education">
+    <div class="section-header">
+      <div class="section-label">Education</div>
+      <h2 class="section-title">Where I've <em>studied</em>.</h2>
+    </div>
+
+    <div class="edu-block">
+      <div class="entry-date">2025 — Present<span class="loc">Urbana, IL</span></div>
+      <div>
+        <div class="edu-school">University of Illinois Urbana-Champaign</div>
+        <div class="edu-degree">M.Sc. Computer Science</div>
+      </div>
+    </div>
+
+    <div class="edu-block">
+      <div class="entry-date">2011 — 2016<span class="loc">Tehran, Iran</span></div>
+      <div>
+        <div class="edu-school">Sharif University of Technology</div>
+        <div class="edu-degree">B.Sc. Computer Engineering</div>
+        <div class="edu-gpa">GPA 3.X / 4.0</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Saman Dehghan — Last updated April 2026</span>
+    <span class="mark">Champaign · Illinois</span>
+  </footer>
 
 </div>
+
+<script>
+  document.querySelectorAll('[data-toggle]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const pub = btn.closest('.pub');
+      const abs = pub.querySelector('[data-abstract]');
+      const label = btn.querySelector('.label');
+      const isCollapsed = abs.classList.toggle('collapsed');
+      btn.classList.toggle('open', !isCollapsed);
+      label.textContent = isCollapsed ? 'Read abstract' : 'Collapse';
+    });
+  });
+</script>
 
 </body>
 </html>
