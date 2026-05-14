@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- SEO Metadata -->
+<meta name="description" content="Saman Dehghan - Computer Science Researcher at UIUC. Specialist in Systems Programming (C/C++), Rust, and Automated Code Evolution using LLMs.">
+<meta name="keywords" content="Saman Dehghan, UIUC, Systems Engineer, C++, Rust, Rustine, Software Security, Transpilation">
+<link rel="canonical" href="https://enum-class.github.io/">
+
+<!-- Open Graph (for LinkedIn/Twitter previews) -->
+<meta property="og:title" content="Saman Dehghan | Systems Software Engineer">
+<meta property="og:description" content="M.Sc. CS student at UIUC focusing on high-performance systems and memory safety.">
+<meta property="og:url" content="https://enum-class.github.io/">
+<meta property="og:type" content="website">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Saman Dehghan — Systems Software Engineer</title>
@@ -490,6 +500,31 @@ footer .mark {
 
   section { padding: 44px 0; }
 }
+
+/* Print optimization */
+@media print {
+  body { background: white; font-size: 12pt; }
+  .container { max-width: 100%; padding: 0; }
+  header { padding-top: 20px; }
+  section { page-break-inside: avoid; }
+  .pub-toggle, footer { display: none; }
+  .pub-abstract { display: block !important; -webkit-line-clamp: initial !important; }
+}
+
+/* Tagline code-comment style */
+.tagline {
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* Scroll padding for nav links */
+html { scroll-padding-top: 2rem; }
+
+/* Refined highlight color */
+.prose strong {
+  background: linear-gradient(to top, rgba(194, 65, 12, 0.15) 40%, transparent 40%);
+}
+  
 </style>
 </head>
 <body>
@@ -825,6 +860,23 @@ footer .mark {
       label.textContent = isCollapsed ? 'Read abstract' : 'Collapse';
     });
   });
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Saman Dehghan",
+  "givenName": "Saman",
+  "familyName": "Dehghan",
+  "url": "https://enum-class.github.io/",
+  "affiliation": {
+    "@type": "EducationalOrganization",
+    "name": "University of Illinois Urbana-Champaign"
+  },
+  "jobTitle": "Graduate Researcher",
+  "knowsAbout": ["Systems Programming", "C++", "Rust", "Large Language Models", "Software Security"]
+}
 </script>
 
 </body>
