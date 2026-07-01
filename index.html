@@ -6,7 +6,7 @@
 <meta name="keywords" content="Saman Dehghan, UIUC, Systems Engineer, C++, Rust, Rustine, Software Security, Transpilation">
 <link rel="canonical" href="https://enum-class.github.io/">
 
-<!-- Open Graph (for LinkedIn/Twitter previews) -->
+<!-- Open Graph -->
 <meta property="og:title" content="Saman Dehghan | Systems Software Engineer">
 <meta property="og:description" content="M.Sc. CS student at UIUC focusing on high-performance systems and memory safety.">
 <meta property="og:url" content="https://enum-class.github.io/">
@@ -14,10 +14,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Saman Dehghan — Systems Software Engineer</title>
+
+<!-- Theme flash prevention -->
+<script>
+  (function(){
+    var t = localStorage.getItem('theme');
+    if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  })();
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=JetBrains+Mono:wght@400;500;600&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
+
 <style>
+/* ── Registered properties for smooth theme transitions ── */
+@property --bg       { syntax:'<color>'; inherits:true; initial-value:#f5f1e8; }
+@property --bg-alt   { syntax:'<color>'; inherits:true; initial-value:#ece6d6; }
+@property --ink      { syntax:'<color>'; inherits:true; initial-value:#1a1a1a; }
+@property --ink-soft { syntax:'<color>'; inherits:true; initial-value:#4a4a4a; }
+@property --ink-faint{ syntax:'<color>'; inherits:true; initial-value:#8a8578; }
+@property --rule     { syntax:'<color>'; inherits:true; initial-value:#d6cfbd; }
+@property --accent   { syntax:'<color>'; inherits:true; initial-value:#c2410c; }
+@property --accent-soft { syntax:'<color>'; inherits:true; initial-value:rgba(194,65,12,0.15); }
+@property --dot      { syntax:'<color>'; inherits:true; initial-value:rgba(26,26,26,0.025); }
+@property --nav-bg   { syntax:'<color>'; inherits:true; initial-value:rgba(245,241,232,0.8); }
+
+/* ── Light theme (default) ── */
 :root {
   --bg: #f5f1e8;
   --bg-alt: #ece6d6;
@@ -26,12 +50,35 @@
   --ink-faint: #8a8578;
   --rule: #d6cfbd;
   --accent: #c2410c;
-  --accent-soft: #fed7aa;
+  --accent-soft: rgba(194,65,12,0.15);
+  --dot: rgba(26,26,26,0.025);
+  --nav-bg: rgba(245,241,232,0.8);
+}
+
+/* ── Dark theme ── */
+[data-theme="dark"] {
+  --bg: #0f0f0e;
+  --bg-alt: #1a1917;
+  --ink: #e5e0d5;
+  --ink-soft: #a09a8e;
+  --ink-faint: #5c5850;
+  --rule: #2c2924;
+  --accent: #f97316;
+  --accent-soft: rgba(249,115,22,0.12);
+  --dot: rgba(229,224,213,0.025);
+  --nav-bg: rgba(15,15,14,0.85);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px;
+  transition: --bg .45s ease, --bg-alt .45s ease, --ink .45s ease,
+              --ink-soft .45s ease, --ink-faint .45s ease, --rule .45s ease,
+              --accent .45s ease, --accent-soft .45s ease, --dot .45s ease,
+              --nav-bg .45s ease;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
-html { scroll-behavior: smooth; }
 
 body {
   font-family: 'Inter Tight', -apple-system, sans-serif;
@@ -39,20 +86,190 @@ body {
   color: var(--ink);
   line-height: 1.6;
   font-size: 16px;
-  background-image:
-    radial-gradient(circle at 1px 1px, rgba(26,26,26,0.025) 1px, transparent 0);
+  background-image: radial-gradient(circle at 1px 1px, var(--dot) 1px, transparent 0);
   background-size: 20px 20px;
+  transition: background-color .45s ease;
 }
 
+/* ── Noise overlay ── */
+.noise {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+  opacity: 0.4;
+}
+[data-theme="dark"] .noise { opacity: 0.5; }
+.noise rect { width: 100%; height: 100%; }
+
+/* ── Scroll progress ── */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 2px;
+  width: 0%;
+  background: var(--accent);
+  z-index: 1001;
+  transition: background-color .45s ease;
+}
+
+/* ── Nav ── */
+nav {
+  position: fixed;
+  top: 2px;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .3s ease, background .45s ease;
+}
+nav.scrolled { border-bottom-color: var(--rule); }
+
+.nav-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 40px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--ink);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+  transition: color .2s;
+}
+.nav-logo:hover { color: var(--accent); }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.nav-links a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  text-decoration: none;
+  transition: color .2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 1.5px;
+  background: var(--accent);
+  transition: width .25s ease;
+}
+.nav-links a:hover,
+.nav-links a.active { color: var(--ink); }
+.nav-links a.active::after { width: 100%; }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--ink-soft);
+  transition: color .2s, border-color .2s, background .2s;
+}
+.theme-toggle:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.theme-toggle svg { width: 16px; height: 16px; }
+.theme-toggle .icon-moon { display: block; }
+.theme-toggle .icon-sun  { display: none; }
+[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+[data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 20px;
+  height: 1.5px;
+  background: var(--ink-soft);
+  border-radius: 1px;
+  transition: transform .3s, opacity .3s, background .3s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.nav-mobile {
+  display: none;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--rule);
+  padding: 16px 40px 20px;
+  flex-direction: column;
+  gap: 14px;
+}
+.nav-mobile.open { display: flex; }
+.nav-mobile a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  text-decoration: none;
+  transition: color .2s;
+}
+.nav-mobile a:hover,
+.nav-mobile a.active { color: var(--accent); }
+
+/* ── Container ── */
 .container {
   max-width: 960px;
   margin: 0 auto;
   padding: 0 40px;
 }
 
-/* HEADER */
+/* ── Header ── */
 header {
-  padding: 80px 0 60px;
+  padding: 110px 0 60px;
   border-bottom: 1px solid var(--rule);
 }
 
@@ -70,6 +287,7 @@ header {
   letter-spacing: -0.04em;
   line-height: 0.95;
   color: var(--ink);
+  animation: fadeInUp .8s cubic-bezier(.16,1,.3,1) both;
 }
 
 .name em {
@@ -85,6 +303,20 @@ header {
   letter-spacing: 0.02em;
   margin-top: 20px;
   max-width: 520px;
+  font-style: italic;
+  opacity: 0.8;
+  animation: fadeInUp .8s cubic-bezier(.16,1,.3,1) .15s both;
+}
+.tagline::after {
+  content: '▌';
+  color: var(--accent);
+  margin-left: 1px;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .meta-block {
@@ -95,26 +327,48 @@ header {
   line-height: 1.8;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  animation: fadeInUp .8s cubic-bezier(.16,1,.3,1) .3s both;
 }
 
 .meta-block a {
   color: var(--ink);
   text-decoration: none;
   border-bottom: 1px solid var(--rule);
-  transition: border-color 0.2s, color 0.2s;
+  transition: border-color .2s, color .2s;
 }
-
 .meta-block a:hover {
   color: var(--accent);
   border-bottom-color: var(--accent);
 }
 
-/* SECTIONS */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Scroll-reveal ── */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .65s cubic-bezier(.16,1,.3,1), transform .65s cubic-bezier(.16,1,.3,1);
+}
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+[data-reveal-delay="1"] { transition-delay: .07s; }
+[data-reveal-delay="2"] { transition-delay: .14s; }
+[data-reveal-delay="3"] { transition-delay: .21s; }
+[data-reveal-delay="4"] { transition-delay: .28s; }
+[data-reveal-delay="5"] { transition-delay: .35s; }
+[data-reveal-delay="6"] { transition-delay: .42s; }
+[data-reveal-delay="7"] { transition-delay: .49s; }
+
+/* ── Sections ── */
 section {
   padding: 60px 0;
   border-bottom: 1px solid var(--rule);
 }
-
 section:last-of-type { border-bottom: none; }
 
 .section-header {
@@ -133,7 +387,6 @@ section:last-of-type { border-bottom: none; }
   color: var(--ink-faint);
   padding-top: 8px;
 }
-
 .section-label::before {
   content: "§";
   color: var(--accent);
@@ -150,13 +403,12 @@ section:last-of-type { border-bottom: none; }
   letter-spacing: -0.02em;
   color: var(--ink);
 }
-
 .section-title em {
   font-style: italic;
   color: var(--ink-soft);
 }
 
-/* ABOUT */
+/* ── About ── */
 .about-body {
   display: grid;
   grid-template-columns: 180px 1fr;
@@ -171,17 +423,15 @@ section:last-of-type { border-bottom: none; }
   font-weight: 300;
   max-width: 620px;
 }
-
 .prose strong {
   font-weight: 500;
   color: var(--ink);
   background: linear-gradient(to top, var(--accent-soft) 40%, transparent 40%);
   padding: 0 2px;
 }
-
 .prose + .prose { margin-top: 18px; }
 
-/* SKILLS */
+/* ── Skills ── */
 .skills-grid {
   display: grid;
   grid-template-columns: 180px 1fr;
@@ -197,7 +447,9 @@ section:last-of-type { border-bottom: none; }
 .skill-block {
   border-top: 2px solid var(--ink);
   padding-top: 14px;
+  transition: border-color .3s;
 }
+.skill-block:hover { border-color: var(--accent); }
 
 .skill-block-label {
   font-family: 'JetBrains Mono', monospace;
@@ -215,17 +467,24 @@ section:last-of-type { border-bottom: none; }
   color: var(--ink);
 }
 
-/* ENTRIES */
+/* ── Entries (shared) ── */
 .entry {
   display: grid;
   grid-template-columns: 180px 1fr;
   gap: 40px;
   padding: 28px 0;
   border-top: 1px solid var(--rule);
+  position: relative;
+  transition: background .25s ease;
+  border-left: 3px solid transparent;
+  margin-left: -3px;
 }
-
 .entry:first-of-type {
   border-top: 2px solid var(--ink);
+}
+.entry:hover {
+  background: var(--accent-soft);
+  border-left-color: var(--accent);
 }
 
 .entry-date {
@@ -237,7 +496,6 @@ section:last-of-type { border-bottom: none; }
   padding-top: 6px;
   line-height: 1.7;
 }
-
 .entry-date .loc {
   color: var(--ink-soft);
   display: block;
@@ -253,7 +511,6 @@ section:last-of-type { border-bottom: none; }
   margin-bottom: 4px;
   line-height: 1.3;
 }
-
 .entry-title em {
   font-style: italic;
   color: var(--accent);
@@ -272,18 +529,12 @@ section:last-of-type { border-bottom: none; }
   line-height: 1.65;
   color: var(--ink-soft);
 }
-
-.entry-body ul {
-  list-style: none;
-  padding: 0;
-}
-
+.entry-body ul { list-style: none; padding: 0; }
 .entry-body li {
   position: relative;
   padding-left: 18px;
   margin-bottom: 6px;
 }
-
 .entry-body li::before {
   content: "—";
   position: absolute;
@@ -291,7 +542,6 @@ section:last-of-type { border-bottom: none; }
   color: var(--accent);
   font-weight: 500;
 }
-
 .entry-body code {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.85em;
@@ -301,17 +551,68 @@ section:last-of-type { border-bottom: none; }
   color: var(--ink);
 }
 
-/* PUBLICATIONS */
+/* ── Experience timeline ── */
+#experience .entry::after {
+  content: '';
+  position: absolute;
+  left: 177px;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--rule);
+}
+#experience .entry:first-of-type::after { top: 36px; }
+#experience .entry:last-of-type::after { bottom: calc(100% - 36px); top: 0; }
+
+#experience .entry .entry-date { position: relative; }
+#experience .entry .entry-date::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 10px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--ink-faint);
+  transition: border-color .3s, background .3s;
+  z-index: 1;
+}
+#experience .entry:first-of-type .entry-date::after {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+/* ── Project type dots ── */
+.project-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+[data-project-type="personal"] .project-dot { background: var(--accent); }
+[data-project-type="google"]   .project-dot { background: #4285f4; }
+[data-project-type="other"]    .project-dot { background: #34a853; }
+
+/* ── Publications ── */
 .pub {
   display: grid;
   grid-template-columns: 180px 1fr;
   gap: 40px;
   padding: 32px 0;
   border-top: 1px solid var(--rule);
+  border-left: 3px solid transparent;
+  margin-left: -3px;
+  transition: background .25s ease, border-left-color .25s ease;
 }
-
 .pub:first-of-type {
   border-top: 2px solid var(--ink);
+}
+.pub:hover {
+  background: var(--accent-soft);
+  border-left-color: var(--accent);
 }
 
 .pub-meta {
@@ -323,7 +624,6 @@ section:last-of-type { border-bottom: none; }
   line-height: 1.7;
   padding-top: 6px;
 }
-
 .pub-meta .venue {
   display: block;
   color: var(--ink);
@@ -339,7 +639,6 @@ section:last-of-type { border-bottom: none; }
   color: var(--ink);
   margin-bottom: 10px;
 }
-
 .pub-title a {
   color: inherit;
   text-decoration: none;
@@ -347,12 +646,9 @@ section:last-of-type { border-bottom: none; }
   background-size: 0% 1px;
   background-position: 0 100%;
   background-repeat: no-repeat;
-  transition: background-size 0.3s ease;
+  transition: background-size .3s ease;
 }
-
-.pub-title a:hover {
-  background-size: 100% 1px;
-}
+.pub-title a:hover { background-size: 100% 1px; }
 
 .pub-authors {
   font-size: 0.9rem;
@@ -360,7 +656,6 @@ section:last-of-type { border-bottom: none; }
   margin-bottom: 14px;
   line-height: 1.55;
 }
-
 .pub-authors .self {
   color: var(--ink);
   font-weight: 600;
@@ -373,7 +668,6 @@ section:last-of-type { border-bottom: none; }
   color: var(--ink-soft);
   max-width: 680px;
 }
-
 .pub-abstract.collapsed {
   display: -webkit-box;
   -webkit-line-clamp: 4;
@@ -395,29 +689,30 @@ section:last-of-type { border-bottom: none; }
   align-items: center;
   gap: 6px;
 }
-
 .pub-toggle:hover { text-decoration: underline; }
-
 .pub-toggle .arrow {
-  transition: transform 0.2s ease;
+  transition: transform .2s ease;
   display: inline-block;
 }
+.pub-toggle.open .arrow { transform: rotate(90deg); }
 
-.pub-toggle.open .arrow {
-  transform: rotate(90deg);
-}
-
-/* EDUCATION */
+/* ── Education ── */
 .edu-block {
   display: grid;
   grid-template-columns: 180px 1fr;
   gap: 40px;
   padding: 24px 0;
   border-top: 1px solid var(--rule);
+  border-left: 3px solid transparent;
+  margin-left: -3px;
+  transition: background .25s ease, border-left-color .25s ease;
 }
-
 .edu-block:first-of-type {
   border-top: 2px solid var(--ink);
+}
+.edu-block:hover {
+  background: var(--accent-soft);
+  border-left-color: var(--accent);
 }
 
 .edu-school {
@@ -427,14 +722,12 @@ section:last-of-type { border-bottom: none; }
   color: var(--ink);
   margin-bottom: 2px;
 }
-
 .edu-degree {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.82rem;
   color: var(--ink-soft);
   letter-spacing: 0.02em;
 }
-
 .edu-gpa {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.72rem;
@@ -444,7 +737,7 @@ section:last-of-type { border-bottom: none; }
   margin-top: 4px;
 }
 
-/* FOOTER */
+/* ── Footer ── */
 footer {
   padding: 50px 0 60px;
   font-family: 'JetBrains Mono', monospace;
@@ -459,7 +752,6 @@ footer {
   flex-wrap: wrap;
   gap: 20px;
 }
-
 footer .mark {
   font-family: 'Fraunces', serif;
   font-style: italic;
@@ -469,10 +761,40 @@ footer .mark {
   font-size: 0.85rem;
 }
 
-/* RESPONSIVE */
+/* ── Back to top ── */
+.back-to-top {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--bg);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .3s ease, transform .3s ease, background .2s;
+  pointer-events: none;
+  z-index: 100;
+}
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.back-to-top:hover { background: var(--accent); }
+.back-to-top svg { width: 18px; height: 18px; }
+
+/* ── Responsive ── */
 @media (max-width: 760px) {
   .container { padding: 0 24px; }
-  header { padding: 50px 0 40px; }
+  .nav-inner { padding: 0 24px; }
+  header { padding: 80px 0 40px; }
 
   .header-grid {
     grid-template-columns: 1fr;
@@ -492,42 +814,89 @@ footer .mark {
 
   .section-label,
   .entry-date,
-  .pub-meta {
-    padding-top: 0;
-  }
+  .pub-meta { padding-top: 0; }
 
   .skills-list { grid-template-columns: 1fr; }
-
   section { padding: 44px 0; }
+
+  .nav-links { display: none; }
+  .hamburger { display: flex; }
+  .nav-mobile { padding: 16px 24px 20px; }
+
+  /* Hide timeline on mobile */
+  #experience .entry::after { display: none; }
+  #experience .entry .entry-date::after { display: none; }
+
+  .back-to-top { bottom: 20px; right: 20px; }
 }
 
-/* Print optimization */
+/* ── Print ── */
 @media print {
-  body { background: white; font-size: 12pt; }
+  body { background: white !important; font-size: 12pt; }
   .container { max-width: 100%; padding: 0; }
   header { padding-top: 20px; }
   section { page-break-inside: avoid; }
-  .pub-toggle, footer { display: none; }
+  .pub-toggle, footer, nav, .scroll-progress, .back-to-top, .noise { display: none !important; }
   .pub-abstract { display: block !important; -webkit-line-clamp: initial !important; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+  html { scroll-padding-top: 0; }
 }
 
-/* Tagline code-comment style */
-.tagline {
-  font-style: italic;
-  opacity: 0.8;
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  [data-reveal] { opacity: 1; transform: none; }
+  .tagline::after { animation: none; opacity: 0.5; }
+  html { scroll-behavior: auto; }
 }
-
-/* Scroll padding for nav links */
-html { scroll-padding-top: 2rem; }
-
-/* Refined highlight color */
-.prose strong {
-  background: linear-gradient(to top, rgba(194, 65, 12, 0.15) 40%, transparent 40%);
-}
-  
 </style>
 </head>
 <body>
+
+<!-- Noise texture overlay -->
+<svg class="noise" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <filter id="noiseFilter">
+    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+  </filter>
+  <rect width="100%" height="100%" filter="url(#noiseFilter)" opacity="0.04"/>
+</svg>
+
+<!-- Scroll progress bar -->
+<div class="scroll-progress" aria-hidden="true"></div>
+
+<!-- Navigation -->
+<nav role="navigation" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#">SD</a>
+    <div class="nav-links">
+      <a href="#about" data-nav>About</a>
+      <a href="#publications" data-nav>Research</a>
+      <a href="#experience" data-nav>Experience</a>
+      <a href="#open-source" data-nav>Projects</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-toggle" aria-label="Toggle dark mode">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      </button>
+      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="nav-mobile" role="menu">
+    <a href="#about" data-nav role="menuitem">About</a>
+    <a href="#publications" data-nav role="menuitem">Research</a>
+    <a href="#skills" data-nav role="menuitem">Stack</a>
+    <a href="#experience" data-nav role="menuitem">Experience</a>
+    <a href="#open-source" data-nav role="menuitem">Projects</a>
+    <a href="#education" data-nav role="menuitem">Education</a>
+  </div>
+</nav>
 
 <div class="container">
 
@@ -548,17 +917,17 @@ html { scroll-padding-top: 2rem; }
   </header>
 
   <section id="about">
-    <div class="section-header">
+    <div class="section-header" data-reveal>
       <div class="section-label">About</div>
       <h2 class="section-title">Graduate researcher and systems engineer, writing the code <em>underneath the code.</em></h2>
     </div>
     <div class="about-body">
       <div></div>
       <div>
-        <p class="prose">
+        <p class="prose" data-reveal data-reveal-delay="1">
           I am an M.Sc. Computer Science student at the <strong>University of Illinois Urbana-Champaign</strong>, with nearly a decade of industry experience building high-performance systems in <strong>C++ and C</strong> — trading platforms, network data planes, deep-packet inspection engines, and multithreaded storage engines.
         </p>
-        <p class="prose">
+        <p class="prose" data-reveal data-reveal-delay="2">
           My current research sits at the intersection of <strong>programming languages and large language models</strong>: building automated pipelines that translate unsafe C repositories into idiomatic, memory-safe Rust, and studying how agentic LLMs plan and execute engineering tasks.
         </p>
       </div>
@@ -566,12 +935,12 @@ html { scroll-padding-top: 2rem; }
   </section>
 
   <section id="publications">
-    <div class="section-header">
+    <div class="section-header" data-reveal>
       <div class="section-label">Publications</div>
       <h2 class="section-title">Selected <em>research</em>.</h2>
     </div>
 
-    <article class="pub">
+    <article class="pub" data-reveal data-reveal-delay="1">
       <div class="pub-meta">
         2025<span class="venue">arXiv:2511.20617</span>
       </div>
@@ -591,7 +960,7 @@ html { scroll-padding-top: 2rem; }
       </div>
     </article>
 
-    <article class="pub">
+    <article class="pub" data-reveal data-reveal-delay="2">
       <div class="pub-meta">
         2026<span class="venue">arXiv:2604.12147</span>
       </div>
@@ -613,26 +982,26 @@ html { scroll-padding-top: 2rem; }
   </section>
 
   <section id="skills">
-    <div class="section-header">
+    <div class="section-header" data-reveal>
       <div class="section-label">Stack</div>
       <h2 class="section-title">Tools of the <em>trade</em>.</h2>
     </div>
     <div class="skills-grid">
       <div></div>
       <div class="skills-list">
-        <div class="skill-block">
+        <div class="skill-block" data-reveal data-reveal-delay="1">
           <div class="skill-block-label">Languages</div>
           <div class="skill-block-content">C++ 11 / 14 / 17 / 20, C, Rust, Python</div>
         </div>
-        <div class="skill-block">
+        <div class="skill-block" data-reveal data-reveal-delay="2">
           <div class="skill-block-label">Build &amp; Tooling</div>
           <div class="skill-block-content">CMake, Ninja, Meson, Bazel, Docker, Git, Jenkins, GDB, Intel Parallel Studio</div>
         </div>
-        <div class="skill-block">
+        <div class="skill-block" data-reveal data-reveal-delay="3">
           <div class="skill-block-label">Core Concepts</div>
           <div class="skill-block-content">Multithreading, lock-free concurrency, IPC, SIMD, DNN</div>
         </div>
-        <div class="skill-block">
+        <div class="skill-block" data-reveal data-reveal-delay="4">
           <div class="skill-block-label">Networking &amp; Data</div>
           <div class="skill-block-content">DPDK, Netmap, XDP, sockets, Redis, PostgreSQL</div>
         </div>
@@ -641,12 +1010,12 @@ html { scroll-padding-top: 2rem; }
   </section>
 
   <section id="experience">
-    <div class="section-header">
+    <div class="section-header" data-reveal>
       <div class="section-label">Experience</div>
       <h2 class="section-title">Where I've <em>shipped</em>.</h2>
     </div>
 
-    <article class="entry">
+    <article class="entry" data-reveal data-reveal-delay="1">
       <div class="entry-date">Dec 2024 — Present<span class="loc">Urbana, IL</span></div>
       <div>
         <h3 class="entry-title">Research Contributor, <em>Intelligent-CAT Lab</em></h3>
@@ -660,7 +1029,7 @@ html { scroll-padding-top: 2rem; }
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" data-reveal data-reveal-delay="2">
       <div class="entry-date">Aug 2022 — Aug 2024<span class="loc">Malaysia</span></div>
       <div>
         <h3 class="entry-title">Senior Software Engineer, <em>Deriv</em></h3>
@@ -676,7 +1045,7 @@ html { scroll-padding-top: 2rem; }
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" data-reveal data-reveal-delay="3">
       <div class="entry-date">Jan 2022 — Aug 2022<span class="loc">Tehran, Iran</span></div>
       <div>
         <h3 class="entry-title">Software Architect, <em>Mahsan</em></h3>
@@ -692,7 +1061,7 @@ html { scroll-padding-top: 2rem; }
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" data-reveal data-reveal-delay="4">
       <div class="entry-date">Sep 2016 — Jan 2020<span class="loc">Tehran, Iran</span></div>
       <div>
         <h3 class="entry-title">Senior Software Engineer, <em>Mahsan</em></h3>
@@ -707,7 +1076,7 @@ html { scroll-padding-top: 2rem; }
       </div>
     </article>
 
-    <article class="entry">
+    <article class="entry" data-reveal data-reveal-delay="5">
       <div class="entry-date">Feb 2015 — Sep 2016<span class="loc">Tehran, Iran</span></div>
       <div>
         <h3 class="entry-title">C++ Developer, <em>Z.I.E</em></h3>
@@ -724,13 +1093,13 @@ html { scroll-padding-top: 2rem; }
   </section>
 
   <section id="open-source">
-    <div class="section-header">
+    <div class="section-header" data-reveal>
       <div class="section-label">Projects &amp; Open Source</div>
       <h2 class="section-title">Personal work and contributions to <em>public code</em>.</h2>
     </div>
 
-    <article class="entry">
-      <div class="entry-date">CRing</div>
+    <article class="entry" data-project-type="personal" data-reveal data-reveal-delay="1">
+      <div class="entry-date"><span class="project-dot"></span>CRing</div>
       <div>
         <h3 class="entry-title">Event loop library in pure C</h3>
         <div class="entry-body">
@@ -741,8 +1110,8 @@ html { scroll-padding-top: 2rem; }
       </div>
     </article>
 
-    <article class="entry">
-      <div class="entry-date">C-ACES</div>
+    <article class="entry" data-project-type="personal" data-reveal data-reveal-delay="2">
+      <div class="entry-date"><span class="project-dot"></span>C-ACES</div>
       <div>
         <h3 class="entry-title">Homomorphic encryption in C</h3>
         <div class="entry-body">
@@ -753,8 +1122,8 @@ html { scroll-padding-top: 2rem; }
       </div>
     </article>
 
-    <article class="entry">
-      <div class="entry-date">Qiskit-Aer</div>
+    <article class="entry" data-project-type="other" data-reveal data-reveal-delay="3">
+      <div class="entry-date"><span class="project-dot"></span>Qiskit-Aer</div>
       <div>
         <h3 class="entry-title">IBM quantum simulator</h3>
         <div class="entry-body">
@@ -765,8 +1134,8 @@ html { scroll-padding-top: 2rem; }
       </div>
     </article>
 
-    <article class="entry">
-      <div class="entry-date">Google / Highway</div>
+    <article class="entry" data-project-type="google" data-reveal data-reveal-delay="4">
+      <div class="entry-date"><span class="project-dot"></span>Google / Highway</div>
       <div>
         <h3 class="entry-title">SIMD algorithms library</h3>
         <div class="entry-body">
@@ -778,8 +1147,8 @@ html { scroll-padding-top: 2rem; }
       </div>
     </article>
 
-    <article class="entry">
-      <div class="entry-date">Google / Gemma</div>
+    <article class="entry" data-project-type="google" data-reveal data-reveal-delay="5">
+      <div class="entry-date"><span class="project-dot"></span>Google / Gemma</div>
       <div>
         <h3 class="entry-title">Inference runtime</h3>
         <div class="entry-body">
@@ -792,8 +1161,8 @@ html { scroll-padding-top: 2rem; }
       </div>
     </article>
 
-    <article class="entry">
-      <div class="entry-date">Google / FlatBuffers</div>
+    <article class="entry" data-project-type="google" data-reveal data-reveal-delay="6">
+      <div class="entry-date"><span class="project-dot"></span>Google / FlatBuffers</div>
       <div>
         <h3 class="entry-title">Serialization library</h3>
         <div class="entry-body">
@@ -805,8 +1174,8 @@ html { scroll-padding-top: 2rem; }
       </div>
     </article>
 
-    <article class="entry">
-      <div class="entry-date">Netmap</div>
+    <article class="entry" data-project-type="other" data-reveal data-reveal-delay="7">
+      <div class="entry-date"><span class="project-dot"></span>Netmap</div>
       <div>
         <h3 class="entry-title">Kernel-bypass packet I/O</h3>
         <div class="entry-body">
@@ -819,12 +1188,12 @@ html { scroll-padding-top: 2rem; }
   </section>
 
   <section id="education">
-    <div class="section-header">
+    <div class="section-header" data-reveal>
       <div class="section-label">Education</div>
       <h2 class="section-title">Where I've <em>studied</em>.</h2>
     </div>
 
-    <div class="edu-block">
+    <div class="edu-block" data-reveal data-reveal-delay="1">
       <div class="entry-date">2025 — Present<span class="loc">Urbana, IL</span></div>
       <div>
         <div class="edu-school">University of Illinois Urbana-Champaign</div>
@@ -832,7 +1201,7 @@ html { scroll-padding-top: 2rem; }
       </div>
     </div>
 
-    <div class="edu-block">
+    <div class="edu-block" data-reveal data-reveal-delay="2">
       <div class="entry-date">2011 — 2016<span class="loc">Tehran, Iran</span></div>
       <div>
         <div class="edu-school">Sharif University of Technology</div>
@@ -849,17 +1218,140 @@ html { scroll-padding-top: 2rem; }
 
 </div>
 
+<!-- Back to top -->
+<button class="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
 <script>
-  document.querySelectorAll('[data-toggle]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const pub = btn.closest('.pub');
-      const abs = pub.querySelector('[data-abstract]');
-      const label = btn.querySelector('.label');
-      const isCollapsed = abs.classList.toggle('collapsed');
+(function() {
+  'use strict';
+
+  /* ── Theme toggle ── */
+  var toggle = document.querySelector('.theme-toggle');
+  toggle.addEventListener('click', function() {
+    var html = document.documentElement;
+    var isDark = html.getAttribute('data-theme') === 'dark';
+    var next = isDark ? 'light' : 'dark';
+    html.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+
+  /* ── Hamburger menu ── */
+  var hamburger = document.querySelector('.hamburger');
+  var mobileNav = document.querySelector('.nav-mobile');
+  hamburger.addEventListener('click', function() {
+    var isOpen = hamburger.classList.toggle('open');
+    mobileNav.classList.toggle('open', isOpen);
+    hamburger.setAttribute('aria-expanded', isOpen);
+  });
+
+  // Close mobile menu on link click
+  mobileNav.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      hamburger.classList.remove('open');
+      mobileNav.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* ── Scroll progress bar ── */
+  var progressBar = document.querySelector('.scroll-progress');
+  var ticking = false;
+  function updateProgress() {
+    var scrollTop = window.scrollY;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    progressBar.style.width = progress + '%';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(updateProgress);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  /* ── Nav: scrolled state + active section ── */
+  var nav = document.querySelector('nav');
+  var navLinks = document.querySelectorAll('[data-nav]');
+  var sections = document.querySelectorAll('section[id]');
+  var backToTop = document.querySelector('.back-to-top');
+
+  function updateNav() {
+    // Scrolled state
+    nav.classList.toggle('scrolled', window.scrollY > 20);
+
+    // Back to top visibility
+    backToTop.classList.toggle('visible', window.scrollY > 600);
+
+    // Active section
+    var scrollPos = window.scrollY + 120;
+    var activeId = '';
+    sections.forEach(function(section) {
+      if (section.offsetTop <= scrollPos) {
+        activeId = section.getAttribute('id');
+      }
+    });
+    navLinks.forEach(function(link) {
+      var href = link.getAttribute('href').replace('#', '');
+      link.classList.toggle('active', href === activeId);
+    });
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(updateNav);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // Initial calls
+  updateProgress();
+  updateNav();
+
+  /* ── Back to top ── */
+  backToTop.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ── Scroll reveal (Intersection Observer) ── */
+  var revealEls = document.querySelectorAll('[data-reveal]');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(function(el) {
+      observer.observe(el);
+    });
+  } else {
+    // Fallback: show everything immediately
+    revealEls.forEach(function(el) {
+      el.classList.add('revealed');
+    });
+  }
+
+  /* ── Publication abstract toggles ── */
+  document.querySelectorAll('[data-toggle]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var pub = btn.closest('.pub');
+      var abs = pub.querySelector('[data-abstract]');
+      var label = btn.querySelector('.label');
+      var isCollapsed = abs.classList.toggle('collapsed');
       btn.classList.toggle('open', !isCollapsed);
       label.textContent = isCollapsed ? 'Read abstract' : 'Collapse';
     });
   });
+
+})();
 </script>
 
 <script type="application/ld+json">
