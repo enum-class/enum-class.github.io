@@ -1,1375 +1,998 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-<!-- SEO Metadata -->
-<meta name="description" content="Saman Dehghan - Computer Science Researcher at UIUC. Specialist in Systems Programming (C/C++), Rust, and Automated Code Evolution using LLMs.">
-<meta name="keywords" content="Saman Dehghan, UIUC, Systems Engineer, C++, Rust, Rustine, Software Security, Transpilation">
-<link rel="canonical" href="https://enum-class.github.io/">
-
-<!-- Open Graph -->
-<meta property="og:title" content="Saman Dehghan | Systems Software Engineer">
-<meta property="og:description" content="M.Sc. CS student at UIUC focusing on high-performance systems and memory safety.">
-<meta property="og:url" content="https://enum-class.github.io/">
-<meta property="og:type" content="website">
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Saman Dehghan — Systems Software Engineer</title>
-
-<!-- Theme flash prevention -->
-<script>
-  (function(){
-    var t = localStorage.getItem('theme');
-    if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    if (t === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
-  })();
-</script>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=JetBrains+Mono:wght@400;500;600&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
-
-<style>
-/* ── Registered properties for smooth theme transitions ── */
-@property --bg       { syntax:'<color>'; inherits:true; initial-value:#f5f1e8; }
-@property --bg-alt   { syntax:'<color>'; inherits:true; initial-value:#ece6d6; }
-@property --ink      { syntax:'<color>'; inherits:true; initial-value:#1a1a1a; }
-@property --ink-soft { syntax:'<color>'; inherits:true; initial-value:#4a4a4a; }
-@property --ink-faint{ syntax:'<color>'; inherits:true; initial-value:#8a8578; }
-@property --rule     { syntax:'<color>'; inherits:true; initial-value:#d6cfbd; }
-@property --accent   { syntax:'<color>'; inherits:true; initial-value:#c2410c; }
-@property --accent-soft { syntax:'<color>'; inherits:true; initial-value:rgba(194,65,12,0.15); }
-@property --dot      { syntax:'<color>'; inherits:true; initial-value:rgba(26,26,26,0.025); }
-@property --nav-bg   { syntax:'<color>'; inherits:true; initial-value:rgba(245,241,232,0.8); }
-
-/* ── Light theme (default) ── */
-:root {
-  --bg: #f5f1e8;
-  --bg-alt: #ece6d6;
-  --ink: #1a1a1a;
-  --ink-soft: #4a4a4a;
-  --ink-faint: #8a8578;
-  --rule: #d6cfbd;
-  --accent: #c2410c;
-  --accent-soft: rgba(194,65,12,0.15);
-  --dot: rgba(26,26,26,0.025);
-  --nav-bg: rgba(245,241,232,0.8);
-}
-
-/* ── Dark theme ── */
-[data-theme="dark"] {
-  --bg: #0f0f0e;
-  --bg-alt: #1a1917;
-  --ink: #e5e0d5;
-  --ink-soft: #a09a8e;
-  --ink-faint: #5c5850;
-  --rule: #2c2924;
-  --accent: #f97316;
-  --accent-soft: rgba(249,115,22,0.12);
-  --dot: rgba(229,224,213,0.025);
-  --nav-bg: rgba(15,15,14,0.85);
-}
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 72px;
-  transition: --bg .45s ease, --bg-alt .45s ease, --ink .45s ease,
-              --ink-soft .45s ease, --ink-faint .45s ease, --rule .45s ease,
-              --accent .45s ease, --accent-soft .45s ease, --dot .45s ease,
-              --nav-bg .45s ease;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: 'Inter Tight', -apple-system, sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-  line-height: 1.6;
-  font-size: 16px;
-  background-image: radial-gradient(circle at 1px 1px, var(--dot) 1px, transparent 0);
-  background-size: 20px 20px;
-  transition: background-color .45s ease;
-}
-
-/* ── Noise overlay ── */
-.noise {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 9999;
-  overflow: hidden;
-  opacity: 0.4;
-}
-[data-theme="dark"] .noise { opacity: 0.5; }
-.noise rect { width: 100%; height: 100%; }
-
-/* ── Scroll progress ── */
-.scroll-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 2px;
-  width: 0%;
-  background: var(--accent);
-  z-index: 1001;
-  transition: background-color .45s ease;
-}
-
-/* ── Nav ── */
-nav {
-  position: fixed;
-  top: 2px;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  background: var(--nav-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid transparent;
-  transition: border-color .3s ease, background .45s ease;
-}
-nav.scrolled { border-bottom-color: var(--rule); }
-
-.nav-inner {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0 40px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.nav-logo {
-  font-family: 'Fraunces', serif;
-  font-weight: 600;
-  font-size: 1.05rem;
-  color: var(--ink);
-  text-decoration: none;
-  letter-spacing: -0.02em;
-  transition: color .2s;
-}
-.nav-logo:hover { color: var(--accent); }
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 28px;
-}
-.nav-links a {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--ink-faint);
-  text-decoration: none;
-  transition: color .2s;
-  position: relative;
-}
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0%;
-  height: 1.5px;
-  background: var(--accent);
-  transition: width .25s ease;
-}
-.nav-links a:hover,
-.nav-links a.active { color: var(--ink); }
-.nav-links a.active::after { width: 100%; }
-
-.nav-right {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.theme-toggle {
-  background: none;
-  border: 1px solid var(--rule);
-  border-radius: 8px;
-  width: 34px;
-  height: 34px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--ink-soft);
-  transition: color .2s, border-color .2s, background .2s;
-}
-.theme-toggle:hover {
-  color: var(--accent);
-  border-color: var(--accent);
-  background: var(--accent-soft);
-}
-.theme-toggle svg { width: 16px; height: 16px; }
-.theme-toggle .icon-moon { display: block; }
-.theme-toggle .icon-sun  { display: none; }
-[data-theme="dark"] .theme-toggle .icon-moon { display: none; }
-[data-theme="dark"] .theme-toggle .icon-sun  { display: block; }
-
-.hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-}
-.hamburger span {
-  display: block;
-  width: 20px;
-  height: 1.5px;
-  background: var(--ink-soft);
-  border-radius: 1px;
-  transition: transform .3s, opacity .3s, background .3s;
-}
-.hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-.hamburger.open span:nth-child(2) { opacity: 0; }
-.hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-.nav-mobile {
-  display: none;
-  position: absolute;
-  top: 50px;
-  left: 0;
-  right: 0;
-  background: var(--nav-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--rule);
-  padding: 16px 40px 20px;
-  flex-direction: column;
-  gap: 14px;
-}
-.nav-mobile.open { display: flex; }
-.nav-mobile a {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--ink-faint);
-  text-decoration: none;
-  transition: color .2s;
-}
-.nav-mobile a:hover,
-.nav-mobile a.active { color: var(--accent); }
-
-/* ── Container ── */
-.container {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0 40px;
-}
-
-/* ── Header ── */
-header {
-  padding: 110px 0 60px;
-  border-bottom: 1px solid var(--rule);
-}
-
-.header-grid {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 40px;
-  align-items: end;
-}
-
-.name {
-  font-family: 'Fraunces', serif;
-  font-weight: 300;
-  font-size: clamp(3rem, 7vw, 5.5rem);
-  letter-spacing: -0.04em;
-  line-height: 0.95;
-  color: var(--ink);
-  animation: fadeInUp .8s cubic-bezier(.16,1,.3,1) both;
-}
-
-.name em {
-  font-style: italic;
-  font-weight: 400;
-  color: var(--accent);
-}
-
-.tagline {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.82rem;
-  color: var(--ink-soft);
-  letter-spacing: 0.02em;
-  margin-top: 20px;
-  max-width: 520px;
-  font-style: italic;
-  opacity: 0.8;
-  animation: fadeInUp .8s cubic-bezier(.16,1,.3,1) .15s both;
-}
-.tagline::after {
-  content: '▌';
-  color: var(--accent);
-  margin-left: 1px;
-  animation: blink 1s step-end infinite;
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-.meta-block {
-  text-align: right;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.75rem;
-  color: var(--ink-faint);
-  line-height: 1.8;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  animation: fadeInUp .8s cubic-bezier(.16,1,.3,1) .3s both;
-}
-
-.meta-block a {
-  color: var(--ink);
-  text-decoration: none;
-  border-bottom: 1px solid var(--rule);
-  transition: border-color .2s, color .2s;
-}
-.meta-block a:hover {
-  color: var(--accent);
-  border-bottom-color: var(--accent);
-}
-
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(28px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ── Scroll-reveal ── */
-[data-reveal] {
-  opacity: 0;
-  transform: translateY(22px);
-  transition: opacity .65s cubic-bezier(.16,1,.3,1), transform .65s cubic-bezier(.16,1,.3,1);
-}
-[data-reveal].revealed {
-  opacity: 1;
-  transform: translateY(0);
-}
-[data-reveal-delay="1"] { transition-delay: .07s; }
-[data-reveal-delay="2"] { transition-delay: .14s; }
-[data-reveal-delay="3"] { transition-delay: .21s; }
-[data-reveal-delay="4"] { transition-delay: .28s; }
-[data-reveal-delay="5"] { transition-delay: .35s; }
-[data-reveal-delay="6"] { transition-delay: .42s; }
-[data-reveal-delay="7"] { transition-delay: .49s; }
-
-/* ── Sections ── */
-section {
-  padding: 60px 0;
-  border-bottom: 1px solid var(--rule);
-}
-section:last-of-type { border-bottom: none; }
-
-.section-header {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 40px;
-  align-items: start;
-  margin-bottom: 40px;
-}
-
-.section-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--ink-faint);
-  padding-top: 8px;
-}
-.section-label::before {
-  content: "§";
-  color: var(--accent);
-  margin-right: 6px;
-  font-family: 'Fraunces', serif;
-  font-style: italic;
-}
-
-.section-title {
-  font-family: 'Fraunces', serif;
-  font-weight: 400;
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  color: var(--ink);
-}
-.section-title em {
-  font-style: italic;
-  color: var(--ink-soft);
-}
-
-/* ── About ── */
-.about-body {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 40px;
-}
-
-.prose {
-  font-family: 'Fraunces', serif;
-  font-size: 1.2rem;
-  line-height: 1.6;
-  color: var(--ink);
-  font-weight: 300;
-  max-width: 620px;
-}
-.prose strong {
-  font-weight: 500;
-  color: var(--ink);
-  background: linear-gradient(to top, var(--accent-soft) 40%, transparent 40%);
-  padding: 0 2px;
-}
-.prose + .prose { margin-top: 18px; }
-
-/* ── Skills ── */
-.skills-grid {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 40px;
-}
-
-.skills-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px 40px;
-}
-
-.skill-block {
-  border-top: 2px solid var(--ink);
-  padding-top: 14px;
-  transition: border-color .3s;
-}
-.skill-block:hover { border-color: var(--accent); }
-
-.skill-block-label {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.68rem;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  color: var(--ink-faint);
-  margin-bottom: 8px;
-}
-
-.skill-block-content {
-  font-family: 'Fraunces', serif;
-  font-size: 1.05rem;
-  line-height: 1.5;
-  color: var(--ink);
-}
-
-/* ── Entries (shared) ── */
-.entry {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 40px;
-  padding: 28px 0;
-  border-top: 1px solid var(--rule);
-  position: relative;
-  transition: background .25s ease;
-  border-left: 3px solid transparent;
-  margin-left: -3px;
-}
-.entry:first-of-type {
-  border-top: 2px solid var(--ink);
-}
-.entry:hover {
-  background: var(--accent-soft);
-  border-left-color: var(--accent);
-}
-
-.entry-date {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--ink-faint);
-  padding-top: 6px;
-  line-height: 1.7;
-}
-.entry-date .loc {
-  color: var(--ink-soft);
-  display: block;
-  margin-top: 2px;
-}
-
-.entry-title {
-  font-family: 'Fraunces', serif;
-  font-size: 1.35rem;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-  margin-bottom: 4px;
-  line-height: 1.3;
-}
-.entry-title em {
-  font-style: italic;
-  color: var(--accent);
-}
-
-.entry-subtitle {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.78rem;
-  color: var(--ink-soft);
-  margin-bottom: 14px;
-  letter-spacing: 0.02em;
-}
-
-.entry-body {
-  font-size: 0.95rem;
-  line-height: 1.65;
-  color: var(--ink-soft);
-}
-.entry-body ul { list-style: none; padding: 0; }
-.entry-body li {
-  position: relative;
-  padding-left: 18px;
-  margin-bottom: 6px;
-}
-.entry-body li::before {
-  content: "—";
-  position: absolute;
-  left: 0;
-  color: var(--accent);
-  font-weight: 500;
-}
-.entry-body code {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.85em;
-  background: var(--bg-alt);
-  padding: 1px 6px;
-  border-radius: 3px;
-  color: var(--ink);
-}
-
-/* ── Experience timeline ── */
-#experience .entry::after {
-  content: '';
-  position: absolute;
-  left: 177px;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: var(--rule);
-}
-#experience .entry:first-of-type::after { top: 36px; }
-#experience .entry:last-of-type::after { bottom: calc(100% - 36px); top: 0; }
-
-#experience .entry .entry-date { position: relative; }
-#experience .entry .entry-date::after {
-  content: '';
-  position: absolute;
-  right: -6px;
-  top: 10px;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--bg);
-  border: 2px solid var(--ink-faint);
-  transition: border-color .3s, background .3s;
-  z-index: 1;
-}
-#experience .entry:first-of-type .entry-date::after {
-  border-color: var(--accent);
-  background: var(--accent);
-}
-
-/* ── Project type dots ── */
-.project-dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  margin-right: 6px;
-  vertical-align: middle;
-}
-[data-project-type="personal"] .project-dot { background: var(--accent); }
-[data-project-type="google"]   .project-dot { background: #4285f4; }
-[data-project-type="other"]    .project-dot { background: #34a853; }
-
-/* ── Publications ── */
-.pub {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 40px;
-  padding: 32px 0;
-  border-top: 1px solid var(--rule);
-  border-left: 3px solid transparent;
-  margin-left: -3px;
-  transition: background .25s ease, border-left-color .25s ease;
-}
-.pub:first-of-type {
-  border-top: 2px solid var(--ink);
-}
-.pub:hover {
-  background: var(--accent-soft);
-  border-left-color: var(--accent);
-}
-
-.pub-meta {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--ink-faint);
-  line-height: 1.7;
-  padding-top: 6px;
-}
-.pub-meta .venue {
-  display: block;
-  color: var(--ink);
-  margin-top: 4px;
-}
-
-.pub-title {
-  font-family: 'Fraunces', serif;
-  font-size: 1.4rem;
-  font-weight: 400;
-  line-height: 1.3;
-  letter-spacing: -0.015em;
-  color: var(--ink);
-  margin-bottom: 10px;
-}
-.pub-title a {
-  color: inherit;
-  text-decoration: none;
-  background-image: linear-gradient(to right, var(--accent), var(--accent));
-  background-size: 0% 1px;
-  background-position: 0 100%;
-  background-repeat: no-repeat;
-  transition: background-size .3s ease;
-}
-.pub-title a:hover { background-size: 100% 1px; }
-
-.pub-authors {
-  font-size: 0.9rem;
-  color: var(--ink-soft);
-  margin-bottom: 14px;
-  line-height: 1.55;
-}
-.pub-authors .self {
-  color: var(--ink);
-  font-weight: 600;
-  border-bottom: 1.5px solid var(--accent);
-}
-
-.pub-abstract {
-  font-size: 0.92rem;
-  line-height: 1.65;
-  color: var(--ink-soft);
-  max-width: 680px;
-}
-.pub-abstract.collapsed {
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.pub-toggle {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--accent);
-  background: none;
-  border: none;
-  padding: 10px 0 0;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.pub-toggle:hover { text-decoration: underline; }
-.pub-toggle .arrow {
-  transition: transform .2s ease;
-  display: inline-block;
-}
-.pub-toggle.open .arrow { transform: rotate(90deg); }
-
-/* ── Education ── */
-.edu-block {
-  display: grid;
-  grid-template-columns: 180px 1fr;
-  gap: 40px;
-  padding: 24px 0;
-  border-top: 1px solid var(--rule);
-  border-left: 3px solid transparent;
-  margin-left: -3px;
-  transition: background .25s ease, border-left-color .25s ease;
-}
-.edu-block:first-of-type {
-  border-top: 2px solid var(--ink);
-}
-.edu-block:hover {
-  background: var(--accent-soft);
-  border-left-color: var(--accent);
-}
-
-.edu-school {
-  font-family: 'Fraunces', serif;
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: var(--ink);
-  margin-bottom: 2px;
-}
-.edu-degree {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.82rem;
-  color: var(--ink-soft);
-  letter-spacing: 0.02em;
-}
-.edu-gpa {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  color: var(--ink-faint);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin-top: 4px;
-}
-
-/* ── Footer ── */
-footer {
-  padding: 50px 0 60px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.72rem;
-  color: var(--ink-faint);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  border-top: 1px solid var(--rule);
-  margin-top: 40px;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-footer .mark {
-  font-family: 'Fraunces', serif;
-  font-style: italic;
-  text-transform: none;
-  letter-spacing: 0;
-  color: var(--accent);
-  font-size: 0.85rem;
-}
-
-/* ── Back to top ── */
-.back-to-top {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--ink);
-  color: var(--bg);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity .3s ease, transform .3s ease, background .2s;
-  pointer-events: none;
-  z-index: 100;
-}
-.back-to-top.visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-.back-to-top:hover { background: var(--accent); }
-.back-to-top svg { width: 18px; height: 18px; }
-
-/* ── Responsive ── */
-@media (max-width: 760px) {
-  .container { padding: 0 24px; }
-  .nav-inner { padding: 0 24px; }
-  header { padding: 80px 0 40px; }
-
-  .header-grid {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-  .meta-block { text-align: left; }
-
-  .section-header,
-  .about-body,
-  .skills-grid,
-  .entry,
-  .pub,
-  .edu-block {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .section-label,
-  .entry-date,
-  .pub-meta { padding-top: 0; }
-
-  .skills-list { grid-template-columns: 1fr; }
-  section { padding: 44px 0; }
-
-  .nav-links { display: none; }
-  .hamburger { display: flex; }
-  .nav-mobile { padding: 16px 24px 20px; }
-
-  /* Hide timeline on mobile */
-  #experience .entry::after { display: none; }
-  #experience .entry .entry-date::after { display: none; }
-
-  .back-to-top { bottom: 20px; right: 20px; }
-}
-
-/* ── Print ── */
-@media print {
-  body { background: white !important; font-size: 12pt; }
-  .container { max-width: 100%; padding: 0; }
-  header { padding-top: 20px; }
-  section { page-break-inside: avoid; }
-  .pub-toggle, footer, nav, .scroll-progress, .back-to-top, .noise { display: none !important; }
-  .pub-abstract { display: block !important; -webkit-line-clamp: initial !important; }
-  [data-reveal] { opacity: 1 !important; transform: none !important; }
-  html { scroll-padding-top: 0; }
-}
-
-/* ── Reduced motion ── */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
-  [data-reveal] { opacity: 1; transform: none; }
-  .tagline::after { animation: none; opacity: 0.5; }
-  html { scroll-behavior: auto; }
-}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saman Dehghan | Systems Software Engineer & Graduate Researcher</title>
+  
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome for clean academic/developer icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#f0f7ff',
+              100: '#e0effe',
+              500: '#0284c7',
+              600: '#0369a1',
+              700: '#075985',
+              800: '#0c4a6e',
+              900: '#082f49',
+              accent: '#38bdf8'
+            },
+            illinois: {
+              orange: '#E84A27',
+              blue: '#13294B'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    }
+    .badge-glow {
+      box-shadow: 0 0 15px -3px rgba(56, 189, 248, 0.2);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.05);
+    }
+    .dark .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(100, 116, 139, 0.4);
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: rgba(100, 116, 139, 0.7);
+    }
+  </style>
 </head>
-<body>
 
-<!-- Noise texture overlay -->
-<svg class="noise" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <filter id="noiseFilter">
-    <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
-  </filter>
-  <rect width="100%" height="100%" filter="url(#noiseFilter)" opacity="0.04"/>
-</svg>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 antialiased selection:bg-sky-500 selection:text-white transition-colors duration-200">
 
-<!-- Scroll progress bar -->
-<div class="scroll-progress" aria-hidden="true"></div>
+  <!-- Top Sticky Navigation -->
+  <header class="sticky top-0 z-40 backdrop-blur-md bg-white/80 dark:bg-slate-950/80 border-b border-slate-200/80 dark:border-slate-800/80 transition-colors">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#" class="group flex items-center gap-2.5 font-bold text-lg text-slate-900 dark:text-white tracking-tight">
+        <span class="w-8 h-8 rounded-lg bg-sky-600 text-white flex items-center justify-center font-mono text-sm shadow-sm group-hover:bg-sky-500 transition-colors">SD</span>
+        <span class="group-hover:text-sky-600 dark:group-hover:text-sky-400 transition-colors">Saman Dehghan</span>
+      </a>
 
-<!-- Navigation -->
-<nav role="navigation" aria-label="Main navigation">
-  <div class="nav-inner">
-    <a class="nav-logo" href="#">SD</a>
-    <div class="nav-links">
-      <a href="#about" data-nav>About</a>
-      <a href="#publications" data-nav>Research</a>
-      <a href="#experience" data-nav>Experience</a>
-      <a href="#open-source" data-nav>Projects</a>
-    </div>
-    <div class="nav-right">
-      <button class="theme-toggle" aria-label="Toggle dark mode">
-        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      </button>
-      <button class="hamburger" aria-label="Toggle menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-  <div class="nav-mobile" role="menu">
-    <a href="#about" data-nav role="menuitem">About</a>
-    <a href="#publications" data-nav role="menuitem">Research</a>
-    <a href="#skills" data-nav role="menuitem">Stack</a>
-    <a href="#experience" data-nav role="menuitem">Experience</a>
-    <a href="#open-source" data-nav role="menuitem">Projects</a>
-    <a href="#education" data-nav role="menuitem">Education</a>
-  </div>
-</nav>
+      <!-- Desktop Navigation Links -->
+      <nav class="hidden md:flex items-center gap-1 text-sm font-medium text-slate-600 dark:text-slate-300">
+        <a href="#about" class="px-3 py-1.5 rounded-md hover:text-sky-600 dark:hover:text-sky-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">About</a>
+        <a href="#publications" class="px-3 py-1.5 rounded-md hover:text-sky-600 dark:hover:text-sky-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">Publications</a>
+        <a href="#experience" class="px-3 py-1.5 rounded-md hover:text-sky-600 dark:hover:text-sky-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">Experience</a>
+        <a href="#open-source" class="px-3 py-1.5 rounded-md hover:text-sky-600 dark:hover:text-sky-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">Open Source</a>
+        <a href="#service" class="px-3 py-1.5 rounded-md hover:text-sky-600 dark:hover:text-sky-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">Service</a>
+        <a href="#skills" class="px-3 py-1.5 rounded-md hover:text-sky-600 dark:hover:text-sky-400 hover:bg-slate-100 dark:hover:bg-slate-800/60 transition-colors">Skills</a>
+      </nav>
 
-<div class="container">
+      <!-- Action items & Theme Toggle -->
+      <div class="flex items-center gap-2">
+        <button id="theme-toggle" aria-label="Toggle dark mode" class="p-2 rounded-lg text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none transition-colors">
+          <i id="theme-icon-light" class="fa-solid fa-sun hidden text-amber-400 text-lg"></i>
+          <i id="theme-icon-dark" class="fa-solid fa-moon hidden text-sky-400 text-lg"></i>
+        </button>
 
-  <header>
-    <div class="header-grid">
-      <div>
-        <h1 class="name">Saman <em>Dehghan</em></h1>
-        <p class="tagline">// Systems software engineer working at the boundary of low-level performance and formal safety. C++ by trade, Rust by conviction.</p>
+        <a href="mailto:samand2@illinois.edu" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white shadow-sm transition-all">
+          <i class="fa-regular fa-envelope"></i> Contact
+        </a>
+
+        <!-- Mobile Menu Trigger -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800" aria-label="Toggle navigation menu">
+          <i class="fa-solid fa-bars text-lg"></i>
+        </button>
       </div>
-      <div class="meta-block">
-        Champaign, IL<br>
-        <a href="https://enum-class.github.io">enum-class</a><br>
-        <a href="mailto:samand2@illinois.edu">samand2@illinois.edu</a><br>
-        <a href="https://github.com/enum-class">github/enum-class</a><br>
-        <a href="https://linkedin.com/in/sadehghan">linkedin/enum-class</a>
-      </div>
+    </div>
+
+    <!-- Mobile Nav Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-slate-950/95 px-4 pt-2 pb-4 space-y-1">
+      <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">About</a>
+      <a href="#publications" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Publications</a>
+      <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Experience</a>
+      <a href="#open-source" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Open Source</a>
+      <a href="#service" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Service & Organization</a>
+      <a href="#skills" class="block px-3 py-2 rounded-md text-base font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Skills & Tech</a>
     </div>
   </header>
 
-  <section id="about">
-    <div class="section-header" data-reveal>
-      <div class="section-label">About</div>
-      <h2 class="section-title">Graduate researcher and systems engineer, writing the code <em>underneath the code.</em></h2>
-    </div>
-    <div class="about-body">
-      <div></div>
-      <div>
-        <p class="prose" data-reveal data-reveal-delay="1">
-          I am an M.Sc. Computer Science student at the <strong>University of Illinois Urbana-Champaign</strong>, with nearly a decade of industry experience building high-performance systems in <strong>C++ and C</strong> — trading platforms, network data planes, deep-packet inspection engines, and multithreaded storage engines.
-        </p>
-        <p class="prose" data-reveal data-reveal-delay="2">
-          My current research sits at the intersection of <strong>programming languages and large language models</strong>: building automated pipelines that translate unsafe C repositories into idiomatic, memory-safe Rust, and studying how agentic LLMs plan and execute engineering tasks.
-        </p>
-      </div>
-    </div>
-  </section>
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14 space-y-16">
+    
+    <!-- Hero / Profile Section -->
+    <section id="about" class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+      
+      <!-- Profile Card (Left Column) -->
+      <div class="lg:col-span-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800/80 rounded-2xl p-6 shadow-sm relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600"></div>
+        
+        <div class="flex flex-col items-center text-center">
+          <div class="w-32 h-32 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-700 border-2 border-sky-500/30 p-1 flex items-center justify-center mb-4 relative group">
+            <img src="photoshoot.jpg" alt="Saman Dehghan Profile Photo" class="w-full h-full object-cover rounded-xl shadow-inner transition-transform duration-300 group-hover:scale-105" onerror="this.src='https://placehold.co/400x400/0f172a/38bdf8?text=SD'">
+          </div>
+          
+          <h1 class="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Saman Dehghan</h1>
+          <p class="text-sky-600 dark:text-sky-400 font-medium text-sm mt-1">Systems Software Engineer & Graduate Researcher</p>
+          
+          <div class="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 mt-2">
+            <i class="fa-solid fa-location-dot text-slate-400"></i>
+            <span>Champaign / Urbana, Illinois, USA</span>
+          </div>
 
-  <section id="publications">
-    <div class="section-header" data-reveal>
-      <div class="section-label">Publications</div>
-      <h2 class="section-title">Selected <em>research</em>.</h2>
-    </div>
+          <div class="w-full border-t border-slate-200 dark:border-slate-800 my-5"></div>
 
-    <article class="pub" data-reveal data-reveal-delay="1">
-      <div class="pub-meta">
-        2025<span class="venue">arXiv:2511.20617</span>
+          <!-- Academic Affiliation Badge -->
+          <div class="w-full bg-slate-50 dark:bg-slate-800/50 rounded-xl p-3 border border-slate-100 dark:border-slate-800 text-left mb-5">
+            <div class="text-[11px] uppercase tracking-wider text-slate-400 font-bold mb-1">Affiliation</div>
+            <div class="text-xs font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-illinois-orange"></span>
+              Intelligent-CAT Lab, UIUC
+            </div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">M.Sc. in Computer Science</div>
+          </div>
+
+          <!-- Contact & Social Icons -->
+          <div class="w-full space-y-2 text-xs font-mono">
+            <a href="mailto:samand2@illinois.edu" class="flex items-center justify-between p-2 rounded-lg bg-slate-50 dark:bg-slate-800/40 hover:bg-sky-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 border border-slate-200/60 dark:border-slate-700/60 transition-colors">
+              <span class="flex items-center gap-2 font-sans font-medium"><i class="fa-regular fa-envelope text-slate-400"></i> Academic</span>
+              <span class="truncate">samand2@illinois.edu</span>
+            </a>
+            <a href="mailto:saman@enumclass.cc" class="flex items-center justify-between p-2 rounded-lg bg-slate-50 dark:bg-slate-800/40 hover:bg-sky-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 border border-slate-200/60 dark:border-slate-700/60 transition-colors">
+              <span class="flex items-center gap-2 font-sans font-medium"><i class="fa-solid fa-at text-slate-400"></i> Personal</span>
+              <span class="truncate">saman@enumclass.cc</span>
+            </a>
+          </div>
+
+          <!-- External Profile Buttons -->
+          <div class="grid grid-cols-3 gap-2 w-full mt-4">
+            <a href="https://github.com/enum-class" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-center p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-sky-500/50 hover:bg-sky-50/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-all text-center group">
+              <i class="fa-brands fa-github text-lg group-hover:text-sky-600 dark:group-hover:text-sky-400"></i>
+              <span class="text-[11px] font-medium mt-1">GitHub</span>
+            </a>
+            <a href="https://scholar.google.com/citations?user=PobdFQcAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-center p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-sky-500/50 hover:bg-sky-50/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-all text-center group">
+              <i class="fa-solid fa-graduation-cap text-lg group-hover:text-sky-600 dark:group-hover:text-sky-400"></i>
+              <span class="text-[11px] font-medium mt-1">Scholar</span>
+            </a>
+            <a href="https://linkedin.com/in/sadehghan" target="_blank" rel="noopener noreferrer" class="flex flex-col items-center justify-center p-2.5 rounded-lg border border-slate-200 dark:border-slate-800 hover:border-sky-500/50 hover:bg-sky-50/50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-all text-center group">
+              <i class="fa-brands fa-linkedin text-lg group-hover:text-sky-600 dark:group-hover:text-sky-400"></i>
+              <span class="text-[11px] font-medium mt-1">LinkedIn</span>
+            </a>
+          </div>
+        </div>
       </div>
-      <div>
-        <h3 class="pub-title">
-          <a href="https://arxiv.org/abs/2511.20617" target="_blank" rel="noopener">Translating Large-Scale C Repositories to Idiomatic Rust</a>
+
+      <!-- Bio / Narrative (Right Column) -->
+      <div class="lg:col-span-8 space-y-6">
+        <div>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-100 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800/80 mb-3">
+            <span class="w-1.5 h-1.5 rounded-full bg-sky-500 animate-pulse"></span>
+            Overview & Research Focus
+          </div>
+          <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+            Bridging High-Performance Systems & AI for Software Engineering
+          </h2>
+        </div>
+
+        <div class="prose prose-slate dark:prose-invert max-w-none text-slate-600 dark:text-slate-300 leading-relaxed space-y-4">
+          <p>
+            I am a <strong>Systems Software Engineer</strong> and graduate researcher at the 
+            <a href="https://illinois.edu" target="_blank" rel="noopener noreferrer" class="text-sky-600 dark:text-sky-400 font-semibold hover:underline">University of Illinois Urbana-Champaign (UIUC)</a>, 
+            working in the <strong>Intelligent-CAT Lab</strong>. With nearly a decade of hands-on industry experience in low-latency C and C++, I specialize in constructing scalable, fault-tolerant distributed systems, network security appliances, real-time trading engines, and high-performance multithreaded data processors.
+          </p>
+          <p>
+            My current research sits at the intersection of <strong>Programming Languages (PL), Software Engineering (SE), and Large Language Models (LLMs)</strong>. Specifically, I focus on:
+          </p>
+          
+          <ul class="grid grid-cols-1 md:grid-cols-2 gap-3 !list-none !pl-0 text-sm">
+            <li class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start gap-2.5">
+              <i class="fa-solid fa-shield-halved text-sky-500 mt-1"></i>
+              <span><strong>Automated C-to-Rust Translation:</strong> Eliminating unsafe memory bugs by translating legacy C systems into idiomatic, verifiable safe Rust (<em class="text-sky-600 dark:text-sky-400">Rustine</em>).</span>
+            </li>
+            <li class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start gap-2.5">
+              <i class="fa-solid fa-robot text-sky-500 mt-1"></i>
+              <span><strong>Autonomous Programming Agents:</strong> Analyzing plan compliance, drift detection, and online corrective steering for SWE agents (<em class="text-sky-600 dark:text-sky-400">ASE '26, LivePlan</em>).</span>
+            </li>
+            <li class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start gap-2.5">
+              <i class="fa-solid fa-code-compare text-sky-500 mt-1"></i>
+              <span><strong>Static Analysis & Compilers:</strong> Upstream LLVM/Clang profiling, coverage instrumentation (MC/DC), and kernel hypervisor internals (Xen).</span>
+            </li>
+            <li class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start gap-2.5">
+              <i class="fa-solid fa-bolt-lightning text-sky-500 mt-1"></i>
+              <span><strong>High-Throughput Systems:</strong> SIMD vectorization, Linux <code>io_uring</code> async runtimes, kernel bypass (DPDK/Netmap), and lock-free concurrency.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Research Highlights Key Metrics -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+          <div class="p-3.5 rounded-xl bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 text-center">
+            <div class="text-2xl font-bold text-sky-600 dark:text-sky-400 font-mono">ASE '26</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold mt-0.5">Top-tier Publication</div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 text-center">
+            <div class="text-2xl font-bold text-sky-600 dark:text-sky-400 font-mono">21,000+</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold mt-0.5">SWE Trajectories Studied</div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 text-center">
+            <div class="text-2xl font-bold text-sky-600 dark:text-sky-400 font-mono">87%</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold mt-0.5">C-to-Rust Equivalence</div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-slate-100/80 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 text-center">
+            <div class="text-2xl font-bold text-sky-600 dark:text-sky-400 font-mono">8+ Yrs</div>
+            <div class="text-[11px] text-slate-500 dark:text-slate-400 uppercase font-semibold mt-0.5">Systems Engineering</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="border-t border-slate-200 dark:border-slate-800 pt-10">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-8 h-8 rounded-lg bg-sky-100 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 flex items-center justify-center">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <h3 class="text-xl font-bold text-slate-900 dark:text-white">Education</h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- UIUC -->
+        <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col justify-between hover:border-sky-500/40 transition-colors">
+          <div>
+            <div class="flex justify-between items-start mb-2">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-semibold bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-900">
+                2025 – Present
+              </span>
+              <span class="text-xs text-slate-400 font-mono">Urbana, IL, USA</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900 dark:text-white">M.Sc. in Computer Science</h4>
+            <p class="text-sky-600 dark:text-sky-400 text-sm font-medium">University of Illinois Urbana-Champaign (UIUC)</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">
+              Research with Intelligent-CAT Lab focusing on Large Language Models for Code, Program Analysis, and Software Engineering.
+            </p>
+          </div>
+        </div>
+
+        <!-- Sharif -->
+        <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col justify-between hover:border-sky-500/40 transition-colors">
+          <div>
+            <div class="flex justify-between items-start mb-2">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                2011 – 2016
+              </span>
+              <span class="text-xs text-slate-400 font-mono">Tehran, Iran</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900 dark:text-white">B.Sc. in Computer Engineering</h4>
+            <p class="text-sky-600 dark:text-sky-400 text-sm font-medium">Sharif University of Technology</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">
+              Rigorous fundamentals in computer architecture, operating systems, algorithm design, and software engineering. GPA: 3.1 / 4.0.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Publications Section -->
+    <section id="publications" class="border-t border-slate-200 dark:border-slate-800 pt-10">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-sky-100 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 flex items-center justify-center">
+            <i class="fa-solid fa-book-bookmark"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Publications & Preprints</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Peer-reviewed conference papers, benchmark studies, and preprints</p>
+          </div>
+        </div>
+
+        <a href="https://scholar.google.com/citations?user=PobdFQcAAAAJ&hl=en" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors">
+          <i class="fa-solid fa-graduation-cap text-sky-500"></i> Google Scholar Profile
+        </a>
+      </div>
+
+      <div class="space-y-4">
+        
+        <!-- Paper 1: ASE 2026 -->
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500/50 transition-all shadow-sm">
+          <div class="flex flex-wrap items-center gap-2 mb-2">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+              ASE 2026
+            </span>
+            <span class="px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+              Conference Paper
+            </span>
+            <span class="text-xs text-slate-400 font-mono ml-auto">arXiv:2604.12147</span>
+          </div>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
+            <a href="https://arxiv.org/abs/2604.12147" target="_blank" rel="noopener noreferrer">
+              From Plan to Action: How Well Do Agents Follow the Plan?
+            </a>
+          </h4>
+
+          <div class="text-xs text-slate-600 dark:text-slate-400 my-2">
+            <span>Shuyang Liu</span>, 
+            <span class="font-bold text-slate-900 dark:text-white underline decoration-sky-500 decoration-2">Saman Dehghan</span>, 
+            <span>Jatin Ganhotra</span>, 
+            <span>Martin Hirzel</span>, 
+            <span>Reyhaneh Jabbarvand</span>
+          </div>
+
+          <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+            Investigates whether autonomous programming agents adhere to user/system generated plans during complex software development tasks. Evaluated over <strong>21,120 SWE-agent trajectories</strong> across four state-of-the-art LLMs, eight plan variations, on SWE-bench Verified and SWE-bench Pro. Uncovers core dynamics of agent compliance, how structured phases influence issue resolution, and when reminders prevent plan deviation.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-2 text-xs">
+            <a href="https://arxiv.org/abs/2604.12147" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-sky-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium transition-colors">
+              <i class="fa-solid fa-file-pdf text-red-500"></i> arXiv:2604.12147
+            </a>
+            <a href="https://doi.org/10.1145/3832783.3834400" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-sky-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium transition-colors">
+              <i class="fa-solid fa-link text-blue-500"></i> ACM DOI: 10.1145/3832783
+            </a>
+            <button onclick="openBibtex('bib-ase26')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-sky-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium transition-colors">
+              <i class="fa-solid fa-quote-right text-slate-400"></i> BibTeX
+            </button>
+          </div>
+        </div>
+
+        <!-- Paper 2: LivePlan -->
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500/50 transition-all shadow-sm">
+          <div class="flex flex-wrap items-center gap-2 mb-2">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-800">
+              Under Publication
+            </span>
+            <span class="px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+              Preprint
+            </span>
+            <span class="text-xs text-slate-400 font-mono ml-auto">arXiv:2608.06701</span>
+          </div>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
+            <a href="https://arxiv.org/abs/2608.06701" target="_blank" rel="noopener noreferrer">
+              Online Monitoring and Corrective Steering of Programming Agents (LivePlan)
+            </a>
+          </h4>
+
+          <div class="text-xs text-slate-600 dark:text-slate-400 my-2">
+            <span>Shuyang Liu</span>, 
+            <span class="font-bold text-slate-900 dark:text-white underline decoration-sky-500 decoration-2">Saman Dehghan</span>, 
+            <span>Ji Young Kim</span>, 
+            <span>Jatin Ganhotra</span>, 
+            <span>Martin Hirzel</span>, 
+            <span>Reyhaneh Jabbarvand</span>
+          </div>
+
+          <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+            Introduces <strong>LivePlan</strong>, an execution framework that monitors programming agent trajectories in real time and applies corrective steering when agents drift or execute repetitive invalid actions. Separates deterministic rule-based triggers from LLM advisors, yielding up to <strong>15.2% improvement (avg. 9.9%)</strong> in issue resolution on SWE-bench at a modest cost of $0.08 per instance.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-2 text-xs">
+            <a href="https://arxiv.org/abs/2608.06701" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-sky-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium transition-colors">
+              <i class="fa-solid fa-file-pdf text-red-500"></i> arXiv:2608.06701
+            </a>
+            <button onclick="openBibtex('bib-liveplan')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-sky-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium transition-colors">
+              <i class="fa-solid fa-quote-right text-slate-400"></i> BibTeX
+            </button>
+          </div>
+        </div>
+
+        <!-- Paper 3: Rustine -->
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500/50 transition-all shadow-sm">
+          <div class="flex flex-wrap items-center gap-2 mb-2">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-800">
+              Under Publication
+            </span>
+            <span class="px-2 py-0.5 rounded text-[11px] font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+              Preprint
+            </span>
+            <span class="text-xs text-slate-400 font-mono ml-auto">arXiv:2511.20617</span>
+          </div>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
+            <a href="https://arxiv.org/abs/2511.20617" target="_blank" rel="noopener noreferrer">
+              Translating Large-Scale C Repositories to Idiomatic Rust (Rustine)
+            </a>
+          </h4>
+
+          <div class="text-xs text-slate-600 dark:text-slate-400 my-2">
+            <span class="font-bold text-slate-900 dark:text-white underline decoration-sky-500 decoration-2">Saman Dehghan</span>, 
+            <span>Tianran Sun</span>, 
+            <span>Tianxiang Wu</span>, 
+            <span>Zihan Li</span>, 
+            <span>Reyhaneh Jabbarvand</span>
+          </div>
+
+          <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+            Presents <strong>Rustine</strong>, a fully automated repository-level pipeline that translates unsafe C codebases into idiomatic, memory-safe Rust. Evaluated on 23 C repositories up to 13,200 LOC, achieving <strong>87% functional equivalence</strong> across 1,221,192 test assertions, drastically minimizing raw pointer usage, unsafe blocks, and compiler linter warnings compared to six baseline methods.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-2 text-xs">
+            <a href="https://arxiv.org/abs/2511.20617" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-sky-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium transition-colors">
+              <i class="fa-solid fa-file-pdf text-red-500"></i> arXiv:2511.20617
+            </a>
+            <button onclick="openBibtex('bib-rustine')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-sky-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium transition-colors">
+              <i class="fa-solid fa-quote-right text-slate-400"></i> BibTeX
+            </button>
+          </div>
+        </div>
+
+        <!-- Paper 4: Literature Review -->
+        <div class="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500/50 transition-all shadow-sm">
+          <div class="flex flex-wrap items-center gap-2 mb-2">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+              Literature Review
+            </span>
+            <span class="text-xs text-slate-400 font-mono ml-auto">Preprints.org 2024</span>
+          </div>
+
+          <h4 class="text-lg font-bold text-slate-900 dark:text-white hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
+            <a href="https://doi.org/10.20944/preprints202411.1147.v1" target="_blank" rel="noopener noreferrer">
+              Assessing Code Reasoning in Large Language Models: A Literature Review of Benchmarks and Future Directions
+            </a>
+          </h4>
+
+          <div class="text-xs text-slate-600 dark:text-slate-400 my-2">
+            <span class="font-bold text-slate-900 dark:text-white underline decoration-sky-500 decoration-2">Saman Dehghan</span>
+          </div>
+
+          <p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mb-4">
+            Comprehensive survey of evaluation benchmarks and methodologies measuring how LLMs understand program logic, execution paths, and semantic invariants, identifying current blind spots in standard code benchmarks.
+          </p>
+
+          <div class="flex flex-wrap items-center gap-2 text-xs">
+            <a href="https://doi.org/10.20944/preprints202411.1147.v1" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-sky-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium transition-colors">
+              <i class="fa-solid fa-link text-blue-500"></i> Preprints.org DOI
+            </a>
+            <button onclick="openBibtex('bib-reasoning')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-sky-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium transition-colors">
+              <i class="fa-solid fa-quote-right text-slate-400"></i> BibTeX
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="border-t border-slate-200 dark:border-slate-800 pt-10">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-8 h-8 rounded-lg bg-sky-100 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 flex items-center justify-center">
+          <i class="fa-solid fa-briefcase"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white">Research & Industry Experience</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Nearly a decade architecting and deploying production systems</p>
+        </div>
+      </div>
+
+      <!-- Experience Timeline -->
+      <div class="relative pl-6 border-l-2 border-slate-200 dark:border-slate-800 space-y-8">
+        
+        <!-- UIUC Intelligent-CAT Lab -->
+        <div class="relative group">
+          <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 rounded-full bg-sky-600 border-4 border-white dark:border-slate-950"></div>
+          
+          <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500/40 transition-colors">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+              <div>
+                <h4 class="text-base font-bold text-slate-900 dark:text-white">Research Contributor</h4>
+                <div class="text-sky-600 dark:text-sky-400 font-medium text-sm">Intelligent-CAT Lab, UIUC</div>
+              </div>
+              <div class="text-xs font-mono text-slate-500 dark:text-slate-400">Dec 2024 – Present · Urbana, IL</div>
+            </div>
+            <ul class="text-sm text-slate-600 dark:text-slate-300 space-y-1.5 list-disc pl-4">
+              <li>Designing an automated LLM pipeline to translate unsafe C repositories into idiomatic, memory-safe Rust (<em class="text-sky-600 dark:text-sky-400">Rustine</em>).</li>
+              <li>Building static analysis frameworks to detect unsafe pointer and concurrency patterns in C codebases and guide synthesis of safe Rust abstractions.</li>
+              <li>Investigating plan-following dynamics and online monitoring for autonomous software development agents on SWE-bench.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Deriv -->
+        <div class="relative group">
+          <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 rounded-full bg-slate-400 group-hover:bg-sky-500 border-4 border-white dark:border-slate-950 transition-colors"></div>
+          
+          <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500/40 transition-colors">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+              <div>
+                <h4 class="text-base font-bold text-slate-900 dark:text-white">Senior Software Engineer</h4>
+                <div class="text-sky-600 dark:text-sky-400 font-medium text-sm">
+                  <a href="https://deriv.com" target="_blank" rel="noopener noreferrer" class="hover:underline">Deriv</a>
+                </div>
+              </div>
+              <div class="text-xs font-mono text-slate-500 dark:text-slate-400">Aug 2022 – Aug 2024 · Malaysia</div>
+            </div>
+            <ul class="text-sm text-slate-600 dark:text-slate-300 space-y-1.5 list-disc pl-4">
+              <li>Architected and developed a real-time algorithmic trading platform executing strategies across crypto, forex, and commodity markets.</li>
+              <li>Engineered high-throughput, low-latency FIX and FAST protocol server engines for rapid market data dissemination and order execution.</li>
+              <li>Implemented quantitative option-pricing algorithms and a bidirectional MetaTrader 5 (MT5) integration bridge.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Mahsan (Architect) -->
+        <div class="relative group">
+          <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 rounded-full bg-slate-400 group-hover:bg-sky-500 border-4 border-white dark:border-slate-950 transition-colors"></div>
+          
+          <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500/40 transition-colors">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+              <div>
+                <h4 class="text-base font-bold text-slate-900 dark:text-white">Software Architect</h4>
+                <div class="text-sky-600 dark:text-sky-400 font-medium text-sm">Mahsan</div>
+              </div>
+              <div class="text-xs font-mono text-slate-500 dark:text-slate-400">Jan 2022 – Aug 2022 · Tehran, Iran</div>
+            </div>
+            <ul class="text-sm text-slate-600 dark:text-slate-300 space-y-1.5 list-disc pl-4">
+              <li>Led the architectural design of a high-speed line-rate distributed network Data Loss Prevention (DLP) solution.</li>
+              <li>Built distributed service discovery engines using Avahi & Poco and designed high-throughput Software-Defined Networking (SDN) dynamic routing tools.</li>
+              <li>Mentored engineers, established code review benchmarks, and led cross-functional technical specifications.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Mahsan (Senior Engineer) -->
+        <div class="relative group">
+          <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 rounded-full bg-slate-400 group-hover:bg-sky-500 border-4 border-white dark:border-slate-950 transition-colors"></div>
+          
+          <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500/40 transition-colors">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+              <div>
+                <h4 class="text-base font-bold text-slate-900 dark:text-white">Senior Software Engineer</h4>
+                <div class="text-sky-600 dark:text-sky-400 font-medium text-sm">Mahsan</div>
+              </div>
+              <div class="text-xs font-mono text-slate-500 dark:text-slate-400">Sep 2016 – Jan 2020 · Tehran, Iran</div>
+            </div>
+            <ul class="text-sm text-slate-600 dark:text-slate-300 space-y-1.5 list-disc pl-4">
+              <li>Refactored Redis into a multithreaded engine, optimized tail latency, and implemented reliable multicast cluster messaging.</li>
+              <li>Constructed an ultra-low latency IPC framework combining shared memory buffers and lockless ring queues for cluster communication.</li>
+              <li>Designed a high-throughput C++ concurrency library for streaming parallel data-processing pipelines.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Z.I.E -->
+        <div class="relative group">
+          <div class="absolute -left-[31px] top-1.5 w-3.5 h-3.5 rounded-full bg-slate-400 group-hover:bg-sky-500 border-4 border-white dark:border-slate-950 transition-colors"></div>
+          
+          <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500/40 transition-colors">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+              <div>
+                <h4 class="text-base font-bold text-slate-900 dark:text-white">C++ Developer</h4>
+                <div class="text-sky-600 dark:text-sky-400 font-medium text-sm">Z.I.E</div>
+              </div>
+              <div class="text-xs font-mono text-slate-500 dark:text-slate-400">Feb 2015 – Sep 2016 · Tehran, Iran</div>
+            </div>
+            <ul class="text-sm text-slate-600 dark:text-slate-300 space-y-1.5 list-disc pl-4">
+              <li>Engineered a deep packet inspection (DPI) library for high-speed protocol classification across OSI network layers.</li>
+              <li>Implemented high-performance pattern-matching engines implementing Aho–Corasick and RETE network algorithms.</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Open Source & Key Projects Section -->
+    <section id="open-source" class="border-t border-slate-200 dark:border-slate-800 pt-10">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-sky-100 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 flex items-center justify-center">
+            <i class="fa-solid fa-code-branch"></i>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Open Source & Key Systems Contributions</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400">Upstream contributions to core systems, SIMD runtimes, and standalone projects</p>
+          </div>
+        </div>
+
+        <a href="https://github.com/enum-class" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition-colors">
+          <i class="fa-brands fa-github text-sky-500"></i> github.com/enum-class
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <!-- Xen Hypervisor -->
+        <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500/40 transition-colors flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
+                Upstream Merged
+              </span>
+              <span class="text-xs text-slate-400 font-mono">Kernel / Hypervisor</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <span>Xen Hypervisor</span>
+              <a href="https://github.com/xen-project/xen" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-sky-500 text-xs"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </h4>
+            <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Added Clang 11–20 LLVM raw profile support (versions 5–10) and Modified Condition/Decision Coverage (MC/DC) profile bitmap sections for hypervisor test verification.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-[11px] font-mono text-slate-500 dark:text-slate-400">
+            <span class="text-sky-600 dark:text-sky-400">commit 186c02e</span> · <span class="text-sky-600 dark:text-sky-400">commit 08c787f</span>
+          </div>
+        </div>
+
+        <!-- Google Highway & Gemma.cpp -->
+        <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500/40 transition-colors flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                Upstream Merged
+              </span>
+              <span class="text-xs text-slate-400 font-mono">Google Open Source</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <span>Highway & gemma.cpp</span>
+              <a href="https://github.com/google/gemma.cpp" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-sky-500 text-xs"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </h4>
+            <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Accelerated LLM inference via Highway SIMD vectorization for <code>RMSNorm</code> and <code>SquaredL2</code> in gemma.cpp. Implemented partial sort, nth-element, and heap selection in Highway.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-[11px] font-mono text-slate-500 dark:text-slate-400">
+            <span>C++20</span> · <span>SIMD</span> · <span>AVX-512 / Neon</span>
+          </div>
+        </div>
+
+        <!-- CRing (io_uring Async Runtime) -->
+        <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500/40 transition-colors flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                Creator
+              </span>
+              <span class="text-xs text-slate-400 font-mono">MIT License</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <span>CRing</span>
+              <a href="https://github.com/enum-class/cring" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-sky-500 text-xs"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </h4>
+            <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Lightweight asynchronous event-loop library written in pure C utilizing Linux <code>io_uring</code> and <code>ucontext</code> user-space coroutines for deterministic, high-throughput network applications.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-[11px] font-mono text-slate-500 dark:text-slate-400">
+            <span>C</span> · <span>Linux io_uring</span> · <span>Async Event Loop</span>
+          </div>
+        </div>
+
+        <!-- Google FlatBuffers & Qiskit Aer -->
+        <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-sky-500/40 transition-colors flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                Upstream Merged
+              </span>
+              <span class="text-xs text-slate-400 font-mono">Serialization / Quantum</span>
+            </div>
+            <h4 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <span>FlatBuffers & Qiskit Aer</span>
+              <a href="https://github.com/google/flatbuffers" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-sky-500 text-xs"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+            </h4>
+            <p class="text-xs text-slate-600 dark:text-slate-400 mt-2 leading-relaxed">
+              Patched cross-platform binary reproducibility, Go/Dart generator edge cases in Google FlatBuffers; fixed performance regressions and undefined behaviors in IBM Qiskit quantum simulator.
+            </p>
+          </div>
+          <div class="flex items-center gap-2 mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 text-[11px] font-mono text-slate-500 dark:text-slate-400">
+            <span>FlatBuffers</span> · <span>Qiskit Aer</span> · <span>C++</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Academic Service Section -->
+    <section id="service" class="border-t border-slate-200 dark:border-slate-800 pt-10">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-8 h-8 rounded-lg bg-sky-100 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 flex items-center justify-center">
+          <i class="fa-solid fa-users-gear"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white">Academic Service & Organization</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Conference and workshop leadership</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg bg-sky-50 dark:bg-slate-800 text-sky-600 dark:text-sky-400 flex items-center justify-center font-bold text-xs shrink-0">
+            '26
+          </div>
+          <div>
+            <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-sky-600 dark:text-sky-400">
+              Co-located with ICSE 2026 · Rio de Janeiro, Brazil
+            </span>
+            <h4 class="text-sm font-bold text-slate-900 dark:text-white mt-0.5">
+              <a href="https://conf.researchr.org/home/recode26" target="_blank" rel="noopener noreferrer" class="hover:underline">
+                ReCode 2026 (1st Intl. Workshop on Code Translation, Transformation, & Modernization)
+              </a>
+            </h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              <strong>Role:</strong> Organizing Committee & Web Co-Chair
+            </p>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-start gap-4">
+          <div class="w-10 h-10 rounded-lg bg-sky-50 dark:bg-slate-800 text-sky-600 dark:text-sky-400 flex items-center justify-center font-bold text-xs shrink-0">
+            '27
+          </div>
+          <div>
+            <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-sky-600 dark:text-sky-400">
+              Co-located with ICSE 2027 · Dublin, Ireland
+            </span>
+            <h4 class="text-sm font-bold text-slate-900 dark:text-white mt-0.5">
+              <a href="https://conf.researchr.org/home/recode27" target="_blank" rel="noopener noreferrer" class="hover:underline">
+                ReCode 2027 (2nd Intl. Workshop on Code Translation, Transformation, & Modernization)
+              </a>
+            </h4>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              <strong>Role:</strong> Organizing Committee & Web Co-Chair
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Technical Skills Section -->
+    <section id="skills" class="border-t border-slate-200 dark:border-slate-800 pt-10">
+      <div class="flex items-center gap-3 mb-6">
+        <div class="w-8 h-8 rounded-lg bg-sky-100 dark:bg-sky-950/60 text-sky-600 dark:text-sky-400 flex items-center justify-center">
+          <i class="fa-solid fa-microchip"></i>
+        </div>
+        <div>
+          <h3 class="text-xl font-bold text-slate-900 dark:text-white">Technical Skills & Expertise</h3>
+          <p class="text-xs text-slate-500 dark:text-slate-400">Proficiencies across systems engineering, compilers, and modern AI/PL research</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <!-- Low Level & Systems -->
+        <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <h4 class="text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-server text-sky-500"></i> Systems & Low-Level
+          </h4>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">C++ (11/14/17/20)</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">C</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">Rust</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">Linux / POSIX</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">io_uring</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">SIMD (AVX/Highway)</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">Lock-free Concurrency</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">IPC / Shared Memory</span>
+          </div>
+        </div>
+
+        <!-- Networking & Data Systems -->
+        <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <h4 class="text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-network-wired text-sky-500"></i> Networking & Infrastructure
+          </h4>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">DPDK / Netmap / XDP</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">Deep Packet Inspection</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">FIX & FAST Protocol</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">Redis Internals</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">SDN Routing</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">PostgreSQL</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">FlatBuffers</span>
+          </div>
+        </div>
+
+        <!-- AI & Research Methods -->
+        <div class="p-5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+          <h4 class="text-sm font-bold text-slate-900 dark:text-white mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-brain text-sky-500"></i> AI, PL & Research
+          </h4>
+          <div class="flex flex-wrap gap-1.5">
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">LLMs for Code</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">SWE-bench / Agentic Workflows</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">Static Program Analysis</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">LLVM / Clang / MC/DC</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">Python / PyTorch</span>
+            <span class="px-2.5 py-1 rounded-md text-xs font-mono bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200">CMake / Bazel / Meson</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BibTeX Modal -->
+  <div id="bibtex-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden">
+    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-2xl p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+        <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+          <i class="fa-solid fa-quote-left text-sky-500"></i> BibTeX Citation
         </h3>
-        <p class="pub-authors">
-          <span class="self">Saman Dehghan</span>, Tianran Sun, Tianxiang Wu, Zihan Li, Reyhaneh Jabbarvand
-        </p>
-        <p class="pub-abstract collapsed" data-abstract>
-          Existing C to Rust translation techniques fail to balance quality and scalability: transpilation-based approaches scale to large projects but produce code with poor safety, idiomaticity, and readability. In contrast, LLM-based techniques are prohibitively expensive due to their reliance on frontier models, limiting scalability. This paper proposes <strong>Rustine</strong>, a fully automated pipeline for effective and efficient repository-level C to idiomatic safe Rust translation. Evaluating on a diverse set of 23 C programs (27–13,200 LOC), Rustine generates fully compilable Rust code for all and achieves 87% functional equivalence (1,063,099 of 1,221,192 assertions), with average function and line coverage of 74.7% and 72.2%. Compared to six prior repository-level techniques, Rustine's translations are safer (fewer raw pointers, pointer arithmetic, and unsafe constructs), more idiomatic (fewer linter violations), and more readable. When translations cannot fully pass tests, developers complete the remaining work in 4.5 hours on average using Rustine as debugging support.
-        </p>
-        <button class="pub-toggle" data-toggle>
-          <span class="arrow">▸</span> <span class="label">Read abstract</span>
+        <button onclick="closeBibtex()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+          <i class="fa-solid fa-xmark text-lg"></i>
         </button>
       </div>
-    </article>
 
-    <article class="pub" data-reveal data-reveal-delay="2">
-      <div class="pub-meta">
-        2026<span class="venue">arXiv:2604.12147</span>
+      <div class="mt-4 relative">
+        <textarea id="bibtex-content" readonly class="w-full h-56 p-3.5 font-mono text-xs bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 rounded-xl border border-slate-200 dark:border-slate-800 focus:outline-none resize-none custom-scrollbar"></textarea>
       </div>
-      <div>
-        <h3 class="pub-title">
-          <a href="https://arxiv.org/abs/2604.12147" target="_blank" rel="noopener">From Plan to Action: How Well Do Agents Follow the Plan?</a>
-        </h3>
-        <p class="pub-authors">
-          Shuyang Liu, <span class="self">Saman Dehghan</span>, Jatin Ganhotra, Martin Hirzel, Reyhaneh Jabbarvand
-        </p>
-        <p class="pub-abstract collapsed" data-abstract>
-          Agents aspire to eliminate task-specific prompt crafting through autonomous reason-act-observe loops, yet they are commonly instructed to follow a task-specific plan — e.g., navigation, reproduction, patch, and validation for software issues. It is unknown to what extent agents actually follow such plans, and without that analysis it is impossible to assess whether a solution came from correct strategic reasoning or from data contamination and benchmark overfitting. This paper presents the first extensive, systematic analysis of plan compliance in programming agents, examining 16,991 trajectories from SWE-agent across four LLMs on SWE-bench Verified and SWE-bench Pro under eight plan variations. Without an explicit plan, agents fall back on workflows internalized during training, which are often incomplete, overfit, or inconsistently applied. Providing the standard plan improves issue resolution, and periodic reminders mitigate violations. A subpar plan hurts performance more than no plan at all. Surprisingly, augmenting a plan with additional task-relevant phases early can degrade performance when those phases do not align with the model's internal strategy. These findings highlight a research gap: fine-tuning paradigms that teach models to follow instructed plans rather than encoding task-specific plans within them.
-        </p>
-        <button class="pub-toggle" data-toggle>
-          <span class="arrow">▸</span> <span class="label">Read abstract</span>
-        </button>
-      </div>
-    </article>
-  </section>
 
-  <section id="skills">
-    <div class="section-header" data-reveal>
-      <div class="section-label">Stack</div>
-      <h2 class="section-title">Tools of the <em>trade</em>.</h2>
-    </div>
-    <div class="skills-grid">
-      <div></div>
-      <div class="skills-list">
-        <div class="skill-block" data-reveal data-reveal-delay="1">
-          <div class="skill-block-label">Languages</div>
-          <div class="skill-block-content">C++ 11 / 14 / 17 / 20, C, Rust, Python</div>
-        </div>
-        <div class="skill-block" data-reveal data-reveal-delay="2">
-          <div class="skill-block-label">Build &amp; Tooling</div>
-          <div class="skill-block-content">CMake, Ninja, Meson, Bazel, Docker, Git, Jenkins, GDB, Intel Parallel Studio</div>
-        </div>
-        <div class="skill-block" data-reveal data-reveal-delay="3">
-          <div class="skill-block-label">Core Concepts</div>
-          <div class="skill-block-content">Multithreading, lock-free concurrency, IPC, SIMD, DNN</div>
-        </div>
-        <div class="skill-block" data-reveal data-reveal-delay="4">
-          <div class="skill-block-label">Networking &amp; Data</div>
-          <div class="skill-block-content">DPDK, Netmap, XDP, sockets, Redis, PostgreSQL</div>
+      <div class="mt-4 flex items-center justify-between">
+        <span id="copy-status" class="text-xs text-emerald-600 dark:text-emerald-400 font-medium hidden">
+          <i class="fa-solid fa-check"></i> Copied to clipboard!
+        </span>
+        <div class="flex items-center gap-2 ml-auto">
+          <button onclick="copyBibtex()" class="px-4 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-xs font-semibold shadow-sm transition-all flex items-center gap-1.5">
+            <i class="fa-regular fa-copy"></i> Copy BibTeX
+          </button>
+          <button onclick="closeBibtex()" class="px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-medium transition-colors">
+            Close
+          </button>
         </div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section id="experience">
-    <div class="section-header" data-reveal>
-      <div class="section-label">Experience</div>
-      <h2 class="section-title">Where I've <em>shipped</em>.</h2>
-    </div>
-
-    <article class="entry" data-reveal data-reveal-delay="1">
-      <div class="entry-date">Dec 2024 — Present<span class="loc">Urbana, IL</span></div>
-      <div>
-        <h3 class="entry-title">Research Contributor, <em>Intelligent-CAT Lab</em></h3>
-        <div class="entry-subtitle">University of Illinois Urbana-Champaign</div>
-        <div class="entry-body">
-          <ul>
-            <li>Designing an automated pipeline to transpile unsafe C projects into idiomatic, memory-safe Rust using LLMs.</li>
-            <li>Building static analyses to identify unsafe patterns in C codebases and guide safe-construct synthesis.</li>
-          </ul>
-        </div>
+  <!-- Footer -->
+  <footer class="mt-20 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 py-10 transition-colors">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 dark:text-slate-400">
+      <div class="flex items-center gap-2">
+        <span>© 2026 Saman Dehghan</span>
+        <span>·</span>
+        <span>Champaign / Urbana, IL</span>
       </div>
-    </article>
-
-    <article class="entry" data-reveal data-reveal-delay="2">
-      <div class="entry-date">Aug 2022 — Aug 2024<span class="loc">Malaysia</span></div>
-      <div>
-        <h3 class="entry-title">Senior Software Engineer, <em>Deriv</em></h3>
-        <div class="entry-subtitle">Online trading platform</div>
-        <div class="entry-body">
-          <ul>
-            <li>Designed and delivered a real-time trading bot platform executing client strategies across cryptocurrencies, commodities, and other asset classes.</li>
-            <li>Built high-performance FIX and FAST servers for low-latency market communication.</li>
-            <li>Engineered an option-pricing algorithm to value contracts and inform automated trading decisions.</li>
-            <li>Developed an MT5 bridge to integrate the in-house platform with MetaTrader 5.</li>
-          </ul>
-        </div>
-      </div>
-    </article>
-
-    <article class="entry" data-reveal data-reveal-delay="3">
-      <div class="entry-date">Jan 2022 — Aug 2022<span class="loc">Tehran, Iran</span></div>
-      <div>
-        <h3 class="entry-title">Software Architect, <em>Mahsan</em></h3>
-        <div class="entry-subtitle">Network security</div>
-        <div class="entry-body">
-          <ul>
-            <li>Led architecture of a distributed, real-time Data Loss Prevention (DLP) engine operating at line rate.</li>
-            <li>Designed a distributed service-discovery tool built on Avahi and Poco for networked service registration.</li>
-            <li>Designed configurable SDN tooling for dynamic traffic routing and load balancing in changing environments.</li>
-            <li>Mentored junior engineers, led code reviews, and drove architectural standards across the team.</li>
-          </ul>
-        </div>
-      </div>
-    </article>
-
-    <article class="entry" data-reveal data-reveal-delay="4">
-      <div class="entry-date">Sep 2016 — Jan 2020<span class="loc">Tehran, Iran</span></div>
-      <div>
-        <h3 class="entry-title">Senior Software Engineer, <em>Mahsan</em></h3>
-        <div class="entry-subtitle">Systems and infrastructure</div>
-        <div class="entry-body">
-          <ul>
-            <li>Refactored Redis into a multithreaded variant and implemented reliable multicast messaging for cluster-wide data distribution.</li>
-            <li>Built a low-latency IPC framework combining shared memory and message passing for inter-node communication.</li>
-            <li>Authored a C++ library for parallel and concurrent data-processing pipelines, abstracting parallelism and data-flow management.</li>
-          </ul>
-        </div>
-      </div>
-    </article>
-
-    <article class="entry" data-reveal data-reveal-delay="5">
-      <div class="entry-date">Feb 2015 — Sep 2016<span class="loc">Tehran, Iran</span></div>
-      <div>
-        <h3 class="entry-title">C++ Developer, <em>Z.I.E</em></h3>
-        <div class="entry-subtitle">Network traffic analysis</div>
-        <div class="entry-body">
-          <ul>
-            <li>Developed a high-performance, low-latency deep packet inspection library for protocol detection across the network stack.</li>
-            <li>Built a machine-learning system for application-layer protocol identification.</li>
-            <li>Implemented a pattern-matching library based on Aho–Corasick and RETE algorithms.</li>
-          </ul>
-        </div>
-      </div>
-    </article>
-  </section>
-
-  <section id="open-source">
-    <div class="section-header" data-reveal>
-      <div class="section-label">Projects &amp; Open Source</div>
-      <h2 class="section-title">Personal work and contributions to <em>public code</em>.</h2>
-    </div>
-
-    <article class="entry" data-project-type="personal" data-reveal data-reveal-delay="1">
-      <div class="entry-date"><span class="project-dot"></span>CRing</div>
-      <div>
-        <h3 class="entry-title">Event loop library in pure C</h3>
-        <div class="entry-body">
-          <ul>
-            <li>Lightweight event loop built on <code>io_uring</code>, designed for minimal overhead and predictable latency.</li>
-          </ul>
-        </div>
-      </div>
-    </article>
-
-    <article class="entry" data-project-type="personal" data-reveal data-reveal-delay="2">
-      <div class="entry-date"><span class="project-dot"></span>C-ACES</div>
-      <div>
-        <h3 class="entry-title">Homomorphic encryption in C</h3>
-        <div class="entry-body">
-          <ul>
-            <li>C implementation of the ACES fully-homomorphic-encryption scheme.</li>
-          </ul>
-        </div>
-      </div>
-    </article>
-
-    <article class="entry" data-project-type="other" data-reveal data-reveal-delay="3">
-      <div class="entry-date"><span class="project-dot"></span>Qiskit-Aer</div>
-      <div>
-        <h3 class="entry-title">IBM quantum simulator</h3>
-        <div class="entry-body">
-          <ul>
-            <li>Diagnosed and fixed a performance regression in the Aer simulator.</li>
-          </ul>
-        </div>
-      </div>
-    </article>
-
-    <article class="entry" data-project-type="google" data-reveal data-reveal-delay="4">
-      <div class="entry-date"><span class="project-dot"></span>Google / Highway</div>
-      <div>
-        <h3 class="entry-title">SIMD algorithms library</h3>
-        <div class="entry-body">
-          <ul>
-            <li>Implemented partial sort and nth-element algorithms for improved data-processing throughput.</li>
-            <li>Added heapSelect and heap-based partial sort for specialized selection workloads.</li>
-          </ul>
-        </div>
-      </div>
-    </article>
-
-    <article class="entry" data-project-type="google" data-reveal data-reveal-delay="5">
-      <div class="entry-date"><span class="project-dot"></span>Google / Gemma</div>
-      <div>
-        <h3 class="entry-title">Inference runtime</h3>
-        <div class="entry-body">
-          <ul>
-            <li>Added hardware-accelerated RMSNorm and Squared-L2 kernels via <code>hwy/simd</code>.</li>
-            <li>Introduced clang-tidy into the build for static-analysis-driven code quality.</li>
-            <li>Resolved narrowing-conversion issues and tightened <code>const</code>-correctness across the codebase.</li>
-          </ul>
-        </div>
-      </div>
-    </article>
-
-    <article class="entry" data-project-type="google" data-reveal data-reveal-delay="6">
-      <div class="entry-date"><span class="project-dot"></span>Google / FlatBuffers</div>
-      <div>
-        <h3 class="entry-title">Serialization library</h3>
-        <div class="entry-body">
-          <ul>
-            <li>Fixed Java import-wildcard issues and resolved <code>go generate</code> errors tied to undefined packages.</li>
-            <li>Addressed schema-to-binary conversion bugs and Dart import problems.</li>
-          </ul>
-        </div>
-      </div>
-    </article>
-
-    <article class="entry" data-project-type="other" data-reveal data-reveal-delay="7">
-      <div class="entry-date"><span class="project-dot"></span>Netmap</div>
-      <div>
-        <h3 class="entry-title">Kernel-bypass packet I/O</h3>
-        <div class="entry-body">
-          <ul>
-            <li>Added support for Intel ICE network interface cards to the framework.</li>
-          </ul>
-        </div>
-      </div>
-    </article>
-  </section>
-
-  <section id="education">
-    <div class="section-header" data-reveal>
-      <div class="section-label">Education</div>
-      <h2 class="section-title">Where I've <em>studied</em>.</h2>
-    </div>
-
-    <div class="edu-block" data-reveal data-reveal-delay="1">
-      <div class="entry-date">2025 — Present<span class="loc">Urbana, IL</span></div>
-      <div>
-        <div class="edu-school">University of Illinois Urbana-Champaign</div>
-        <div class="edu-degree">M.Sc. Computer Science</div>
+      <div class="flex items-center gap-4">
+        <a href="https://github.com/enum-class" class="hover:text-sky-500 transition-colors">GitHub</a>
+        <a href="https://scholar.google.com/citations?user=PobdFQcAAAAJ&hl=en" class="hover:text-sky-500 transition-colors">Scholar</a>
+        <a href="https://linkedin.com/in/sadehghan" class="hover:text-sky-500 transition-colors">LinkedIn</a>
+        <a href="mailto:samand2@illinois.edu" class="hover:text-sky-500 transition-colors">Email</a>
       </div>
     </div>
-
-    <div class="edu-block" data-reveal data-reveal-delay="2">
-      <div class="entry-date">2011 — 2016<span class="loc">Tehran, Iran</span></div>
-      <div>
-        <div class="edu-school">Sharif University of Technology</div>
-        <div class="edu-degree">B.Sc. Computer Engineering</div>
-        <div class="edu-gpa">GPA 3.X / 4.0</div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <span>© 2026 Saman Dehghan — Last updated April 2026</span>
-    <span class="mark">Champaign · Illinois</span>
   </footer>
 
-</div>
+  <script>
+    // BibTeX records dictionary
+    const bibtexData = {
+      'bib-ase26': `@inproceedings{liu2026plan,
+  title     = {From Plan to Action: How Well Do Agents Follow the Plan?},
+  author    = {Liu, Shuyang and Dehghan, Saman and Ganhotra, Jatin and Hirzel, Martin and Jabbarvand, Reyhaneh},
+  booktitle = {Proceedings of the 41st IEEE/ACM International Conference on Automated Software Engineering (ASE)},
+  year      = {2026},
+  doi       = {10.1145/3832783.3834400},
+  note      = {arXiv:2604.12147}
+}`,
+      'bib-liveplan': `@article{liu2026online,
+  title   = {Online Monitoring and Corrective Steering of Programming Agents},
+  author  = {Liu, Shuyang and Dehghan, Saman and Kim, Ji Young and Ganhotra, Jatin and Hirzel, Martin and Jabbarvand, Reyhaneh},
+  journal = {arXiv preprint arXiv:2608.06701},
+  year    = {2026},
+  url     = {https://arxiv.org/abs/2608.06701}
+}`,
+      'bib-rustine': `@article{dehghan2025translating,
+  title   = {Translating Large-Scale C Repositories to Idiomatic Rust},
+  author  = {Dehghan, Saman and Sun, Tianran and Wu, Tianxiang and Li, Zihan and Jabbarvand, Reyhaneh},
+  journal = {arXiv preprint arXiv:2511.20617},
+  year    = {2025},
+  url     = {https://arxiv.org/abs/2511.20617}
+}`,
+      'bib-reasoning': `@article{dehghan2024assessing,
+  title   = {Assessing Code Reasoning in Large Language Models: A Literature Review of Benchmarks and Future Directions},
+  author  = {Dehghan, Saman},
+  journal = {Preprints.org},
+  year    = {2024},
+  doi     = {10.20944/preprints202411.1147.v1}
+}`
+    };
 
-<!-- Back to top -->
-<button class="back-to-top" aria-label="Back to top">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
-</button>
-
-<script>
-(function() {
-  'use strict';
-
-  /* ── Theme toggle ── */
-  var toggle = document.querySelector('.theme-toggle');
-  toggle.addEventListener('click', function() {
-    var html = document.documentElement;
-    var isDark = html.getAttribute('data-theme') === 'dark';
-    var next = isDark ? 'light' : 'dark';
-    html.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-  });
-
-  /* ── Hamburger menu ── */
-  var hamburger = document.querySelector('.hamburger');
-  var mobileNav = document.querySelector('.nav-mobile');
-  hamburger.addEventListener('click', function() {
-    var isOpen = hamburger.classList.toggle('open');
-    mobileNav.classList.toggle('open', isOpen);
-    hamburger.setAttribute('aria-expanded', isOpen);
-  });
-
-  // Close mobile menu on link click
-  mobileNav.querySelectorAll('a').forEach(function(a) {
-    a.addEventListener('click', function() {
-      hamburger.classList.remove('open');
-      mobileNav.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', 'false');
-    });
-  });
-
-  /* ── Scroll progress bar ── */
-  var progressBar = document.querySelector('.scroll-progress');
-  var ticking = false;
-  function updateProgress() {
-    var scrollTop = window.scrollY;
-    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    progressBar.style.width = progress + '%';
-    ticking = false;
-  }
-  window.addEventListener('scroll', function() {
-    if (!ticking) {
-      requestAnimationFrame(updateProgress);
-      ticking = true;
+    // BibTeX Modal Logic
+    function openBibtex(key) {
+      const modal = document.getElementById('bibtex-modal');
+      const textarea = document.getElementById('bibtex-content');
+      const copyStatus = document.getElementById('copy-status');
+      if (bibtexData[key]) {
+        textarea.value = bibtexData[key];
+        copyStatus.classList.add('hidden');
+        modal.classList.remove('hidden');
+      }
     }
-  }, { passive: true });
 
-  /* ── Nav: scrolled state + active section ── */
-  var nav = document.querySelector('nav');
-  var navLinks = document.querySelectorAll('[data-nav]');
-  var sections = document.querySelectorAll('section[id]');
-  var backToTop = document.querySelector('.back-to-top');
+    function closeBibtex() {
+      const modal = document.getElementById('bibtex-modal');
+      modal.classList.add('hidden');
+    }
 
-  function updateNav() {
-    // Scrolled state
-    nav.classList.toggle('scrolled', window.scrollY > 20);
+    function copyBibtex() {
+      const textarea = document.getElementById('bibtex-content');
+      textarea.select();
+      textarea.setSelectionRange(0, 99999);
+      try {
+        document.execCommand('copy');
+        const copyStatus = document.getElementById('copy-status');
+        copyStatus.classList.remove('hidden');
+        setTimeout(() => copyStatus.classList.add('hidden'), 3000);
+      } catch (err) {
+        console.error('Failed to copy', err);
+      }
+    }
 
-    // Back to top visibility
-    backToTop.classList.toggle('visible', window.scrollY > 600);
-
-    // Active section
-    var scrollPos = window.scrollY + 120;
-    var activeId = '';
-    sections.forEach(function(section) {
-      if (section.offsetTop <= scrollPos) {
-        activeId = section.getAttribute('id');
+    // Close modal on click outside or escape key
+    window.addEventListener('click', (e) => {
+      const modal = document.getElementById('bibtex-modal');
+      if (e.target === modal) {
+        closeBibtex();
       }
     });
-    navLinks.forEach(function(link) {
-      var href = link.getAttribute('href').replace('#', '');
-      link.classList.toggle('active', href === activeId);
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeBibtex();
+      }
     });
 
-    ticking = false;
-  }
+    // Mobile Navigation Menu Toggle
+    const mobileBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
 
-  window.addEventListener('scroll', function() {
-    if (!ticking) {
-      requestAnimationFrame(updateNav);
-      ticking = true;
+    // Theme Switcher (Light / Dark)
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const lightIcon = document.getElementById('theme-icon-light');
+    const darkIcon = document.getElementById('theme-icon-dark');
+
+    function updateThemeIcons(isDark) {
+      if (isDark) {
+        lightIcon.classList.remove('hidden');
+        darkIcon.classList.add('hidden');
+      } else {
+        lightIcon.classList.add('hidden');
+        darkIcon.classList.remove('hidden');
+      }
     }
-  }, { passive: true });
 
-  // Initial calls
-  updateProgress();
-  updateNav();
+    const userTheme = localStorage.getItem('theme');
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  /* ── Back to top ── */
-  backToTop.addEventListener('click', function() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
+    if (userTheme === 'dark' || (!userTheme && systemTheme)) {
+      document.documentElement.classList.add('dark');
+      updateThemeIcons(true);
+    } else {
+      document.documentElement.classList.remove('dark');
+      updateThemeIcons(false);
+    }
 
-  /* ── Scroll reveal (Intersection Observer) ── */
-  var revealEls = document.querySelectorAll('[data-reveal]');
-  if ('IntersectionObserver' in window) {
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('revealed');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-    revealEls.forEach(function(el) {
-      observer.observe(el);
+    themeToggleBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      updateThemeIcons(isDark);
     });
-  } else {
-    // Fallback: show everything immediately
-    revealEls.forEach(function(el) {
-      el.classList.add('revealed');
-    });
-  }
-
-  /* ── Publication abstract toggles ── */
-  document.querySelectorAll('[data-toggle]').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      var pub = btn.closest('.pub');
-      var abs = pub.querySelector('[data-abstract]');
-      var label = btn.querySelector('.label');
-      var isCollapsed = abs.classList.toggle('collapsed');
-      btn.classList.toggle('open', !isCollapsed);
-      label.textContent = isCollapsed ? 'Read abstract' : 'Collapse';
-    });
-  });
-
-})();
-</script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Saman Dehghan",
-  "givenName": "Saman",
-  "familyName": "Dehghan",
-  "url": "https://enum-class.github.io/",
-  "affiliation": {
-    "@type": "EducationalOrganization",
-    "name": "University of Illinois Urbana-Champaign"
-  },
-  "jobTitle": "Graduate Researcher",
-  "knowsAbout": ["Systems Programming", "C++", "Rust", "Large Language Models", "Software Security"]
-}
-</script>
-
+  </script>
 </body>
 </html>
